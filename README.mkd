@@ -1,0 +1,9 @@
+Generates S5 HTML presentations from markdown files. 
+
+_A work in progress_
+
+Uses the following:
+	* [S5 Reloaded 1.3](http://www.netzgesta.de/S5/)
+	* [Showdown](http://attacklab.net/showdown/)
+	* jQuery
+
