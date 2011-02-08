@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<script type="text/javascript" src="./jquery.js"></script>
+		<script type="text/javascript" src="./showdown.js"></script>
+		<script type="text/javascript" src="./jquery.markdown.js"></script>
+		<script type="text/javascript">
+
+			// TODO: Don't need stupid jQuery plugin for this... load it
+			// yourself.
+			$(document).ready(function() {
+					//$('#main').markdown('./', 'presentation.mkd');
+
+					//var text = "Markdown *rocks*.";
+					//var converter = new Showdown.converter();
+					//var html = converter.makeHtml(text);
+					//alert(html);
+
+
+					$.ajax({
+							url: 'presentation.mkd',
+							success: function(data) {
+								html = markdown(data);
+								$('#main').html(html);
+							}
+						});
+
+					function markdown(data) {
+						var converter = new Showdown.converter();
+						return converter.makeHtml(data);
+					}
+
+			});
+		</script>
+	</head>
+	<body>
+		<div id="data"></div>
+		<p id="main"></p>
+	</body>
+</html>
+
