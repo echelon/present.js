@@ -5,21 +5,12 @@
 		<script type="text/javascript" src="./jquery.markdown.js"></script>
 		<script type="text/javascript">
 
-			// TODO: Don't need stupid jQuery plugin for this... load it
-			// yourself.
 			$(document).ready(function() {
-					//$('#main').markdown('./', 'presentation.mkd');
-
-					//var text = "Markdown *rocks*.";
-					//var converter = new Showdown.converter();
-					//var html = converter.makeHtml(text);
-					//alert(html);
-
-
 					$.ajax({
 							url: 'presentation.mkd',
 							success: function(data) {
-								html = markdown(data);
+								split_by_titles(data);
+								var html = markdown(data);
 								$('#main').html(html);
 							}
 						});
@@ -29,7 +20,19 @@
 						return converter.makeHtml(data);
 					}
 
-			});
+					});
+
+
+			function split_by_titles(text) {
+				var slides = text.split(/[\n|\r]{3,}/m);
+				for(var i=0; i < slides.length; i++) {
+					slides[i] += "\n\n";	
+				};
+				//(?=\w+={4,})/g);
+				//var slides = slides[1]
+				alert(slides);
+			};
+
 		</script>
 	</head>
 	<body>
