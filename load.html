@@ -1,38 +1,26 @@
 <html>
 	<head>
-		<script type="text/javascript" src="./jquery.js"></script>
 		<script type="text/javascript" src="./showdown.js"></script>
-		<script type="text/javascript" src="./jquery.markdown.js"></script>
-		<script type="text/javascript">
+		<script type="text/javascript" src="./jquery.js"></script>
+		<script type="text/javascript" src="./slidemake.js"></script>
+		<script type="text/javascript"> 
+
+			function inject(data) {
+				var slides = slidemake(data);
+				// TODO
+				var html = "";
+				for(var i = 0; i < slides.length; i++) {
+					html += slides[i] + "<hr />";
+				};
+				$('#main').html(html);
+			};
 
 			$(document).ready(function() {
 					$.ajax({
 							url: 'presentation.mkd',
-							success: function(data) {
-								split_by_titles(data);
-								var html = markdown(data);
-								$('#main').html(html);
-							}
-						});
-
-					function markdown(data) {
-						var converter = new Showdown.converter();
-						return converter.makeHtml(data);
-					}
-
+							success: function(data) { inject(data); }
 					});
-
-
-			function split_by_titles(text) {
-				var slides = text.split(/[\n|\r]{3,}/m);
-				for(var i=0; i < slides.length; i++) {
-					slides[i] += "\n\n";	
-				};
-				//(?=\w+={4,})/g);
-				//var slides = slides[1]
-				alert(slides);
-			};
-
+			});
 		</script>
 	</head>
 	<body>
