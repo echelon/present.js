@@ -4,11 +4,16 @@
 function slidemake(text)
 {
 	var slides = [];
+	var html = '';
 
 	slides = split_into_slides(text);
 	markdown_slides(slides);
 	make_s5_slides(slides);
-	return slides;
+
+	for(var i = 0; i < slides.length; i++){
+		html += slides[i]; 
+	};
+	return html;
 };
 
 /* =============== NON-PUBLIC API FOLLOWS ============= */
@@ -46,6 +51,6 @@ function markdown_slides(slides) {
  */
 function make_s5_slides(slides) {
 	for(var i=0; i < slides.length; i++) {
-		slides[i] = slides[i];
+		slides[i] = '<div class="slide">' + slides[i] + '</div>';
 	}
 };

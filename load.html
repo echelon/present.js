@@ -6,18 +6,21 @@
 		<script type="text/javascript"> 
 
 			function inject(data) {
+				$('#main').html('test3');
 				var slides = slidemake(data);
 				// TODO
-				var html = "";
+				/*var html = "";
 				for(var i = 0; i < slides.length; i++) {
 					html += slides[i] + "<hr />";
-				};
-				$('#main').html(html);
+				};*/
+				$('#main').html(slides);
 			};
 
 			$(document).ready(function() {
+				$('#main').html('test');
 					$.ajax({
 							url: 'presentation.mkd',
+							dataType: 'text',
 							success: function(data) { inject(data); }
 					});
 			});
