@@ -1,5 +1,5 @@
 /**
- * Convert markdown-formatted text into S5 slideshow slides.
+ * Returns HTML containing the converted slides.
  */
 function slidemake(text)
 {
@@ -14,6 +14,7 @@ function slidemake(text)
 	return html;
 };
 
+// Returns Slide objects
 function slidemake2(text)
 {
 	var slides = [];
@@ -23,7 +24,8 @@ function slidemake2(text)
 /* =============== NON-PUBLIC API FOLLOWS ============= */
 
 /**
- * Represents a markdown slide.
+ * A plaintext/markdown slide that converts into an HTML 
+ * S5 slide. 
  */
 function Slide(markdown)
 {
@@ -43,9 +45,17 @@ function Slide(markdown)
 
 	this.toHtml = function() {
 		if(!this._html) {
-			this._html = '<div class="slide">';
-			this._html += Slide.convert.makeHtml(this._markdown);
-			this._html += '</div>';
+			var h = '<div class="slide">' + 
+					Slide.convert.makeHtml(this._markdown) +
+					'</div>';
+
+			// Custom directives 
+			// 1) Center 
+			h = h.replace(/center:\s+?([^\n]+)/g, "<center>$1</center>");
+			h = h.replace(/centerAll:\s+?([^\n\n|\n\r\n]+)/g, 
+												"<center>$1</center>");
+
+			this._html = h;
 		}
 		return this._html;
 	};
@@ -62,7 +72,6 @@ function split_into_slides(text)
 	// designated by arbitrary title text followed by at least 
 	// four underlining ='s on the following line).
 	// XXX: REGEX FAILS UNDER LINUX...
-	//var regex = /[\n|\r]{3,}(?=[^\n\r]+[\n|\r]{1,2}={4,})/m;
 	var regex = /[\n|\n\r]{2,}(?=[^\n|\r]+[\n|\r]{1,2}={4,})/m;
 	var s = text.split(regex);
 	var slides = [];

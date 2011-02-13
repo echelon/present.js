@@ -37,8 +37,9 @@
 			.red {color: #C02;}
 		</style>
 
-		<script type="text/javascript" src="./showdown.js"></script>
-		<script type="text/javascript" src="./jquery.js"></script>
+		<script type="text/javascript" src="./lib/showdown.js"></script>
+		<script type="text/javascript" src="./lib/jquery.js"></script>
+		<script type="text/javascript" src="./lib/jquery.getUrlParam.js"></script>
 		<script type="text/javascript" src="./slidemake.js"></script>
 		<script type="text/javascript"> 
 
@@ -47,12 +48,18 @@
 				$('.presentation').html(slides);
 			};
 
-			$(document).ready(function() {
+			function loadfile() {
+				var file = $(document).getUrlParam('mkd') || 'presentation.mkd';
+				$('#main').html('test');
 				$.ajax({
-					url: 'test.mkd',
-					success: function(data) { inject(data); }
+						url: file,
+						dataType: 'text',
+						success: function(data) { inject(data); }
 				});
-			});
+			};
+
+			$(document).ready(function() { loadfile(); });
+
 		</script>
 		
 		<!-- S5 JS -->

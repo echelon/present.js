@@ -1,8 +1,8 @@
 <html>
 	<head>
-		<script type="text/javascript" src="./showdown.js"></script>
-		<script type="text/javascript" src="./jquery.js"></script>
-		<script type="text/javascript" src="./jquery.getUrlParam.js"></script>
+		<script type="text/javascript" src="./lib/showdown.js"></script>
+		<script type="text/javascript" src="./lib/jquery.js"></script>
+		<script type="text/javascript" src="./lib/jquery.getUrlParam.js"></script>
 		<script type="text/javascript" src="./slidemake.js"></script>
 		<script type="text/javascript"> 
 
@@ -16,7 +16,7 @@
 				$('#main').html(html);
 			};
 
-			$(document).ready(function() {
+			function loadfile() {
 				var file = $(document).getUrlParam('mkd') || 'presentation.mkd';
 				$('#main').html('test');
 				$.ajax({
@@ -24,7 +24,10 @@
 						dataType: 'text',
 						success: function(data) { inject(data); }
 				});
-			});
+			};
+
+			$(document).ready(function() { loadfile(); });
+
 		</script>
 	</head>
 	<body>
