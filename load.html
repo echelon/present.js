@@ -2,27 +2,28 @@
 	<head>
 		<script type="text/javascript" src="./showdown.js"></script>
 		<script type="text/javascript" src="./jquery.js"></script>
+		<script type="text/javascript" src="./jquery.getUrlParam.js"></script>
 		<script type="text/javascript" src="./slidemake.js"></script>
 		<script type="text/javascript"> 
 
 			function inject(data) {
 				$('#main').html('test3');
-				var slides = slidemake(data);
-				// TODO
-				/*var html = "";
+				var slides = slidemake2(data);
+				var html = "";
 				for(var i = 0; i < slides.length; i++) {
-					html += slides[i] + "<hr />";
-				};*/
-				$('#main').html(slides);
+					html += slides[i].toHtml() + "<hr />";
+				};
+				$('#main').html(html);
 			};
 
 			$(document).ready(function() {
+				var file = $(document).getUrlParam('mkd') || 'presentation.mkd';
 				$('#main').html('test');
-					$.ajax({
-							url: 'presentation.mkd',
-							dataType: 'text',
-							success: function(data) { inject(data); }
-					});
+				$.ajax({
+						url: file,
+						dataType: 'text',
+						success: function(data) { inject(data); }
+				});
 			});
 		</script>
 	</head>

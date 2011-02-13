@@ -14,6 +14,12 @@ function slidemake(text)
 	return html;
 };
 
+function slidemake2(text)
+{
+	var slides = [];
+	return split_into_slides(text);
+};
+
 /* =============== NON-PUBLIC API FOLLOWS ============= */
 
 /**
@@ -57,7 +63,7 @@ function split_into_slides(text)
 	// four underlining ='s on the following line).
 	// XXX: REGEX FAILS UNDER LINUX...
 	//var regex = /[\n|\r]{3,}(?=[^\n\r]+[\n|\r]{1,2}={4,})/m;
-	var regex = /([\n|\r]{3,}|\n{2,})(?=[^\n\r]+[\n|\r]{1,2}={4,})/m;
+	var regex = /[\n|\n\r]{2,}(?=[^\n|\r]+[\n|\r]{1,2}={4,})/m;
 	var s = text.split(regex);
 	var slides = [];
 	for(var i=0; i < s.length; i++) {
