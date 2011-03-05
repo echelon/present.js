@@ -49,14 +49,12 @@ function Slideshow(slides)
 		if(!this.hasNext()) 
 			return;
 		this._curSlide++;
-		return this._slides[this._curSlide];
 	};
 
 	this.prev = function() {
 		if(!this.hasPrev())
 			return;
 		this._curSlide--;
-		return this._slides[this._curSlide];
 	};
 
 	this.hasNext = function() {

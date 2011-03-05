@@ -29,29 +29,21 @@
 
 			function handleLoad(data) {
 				SS = slidemake3(data);
-
-				$('.presentation').html(SS.current().toHtml());
-				$('.presentation').center();	
-			};
-
-			function inject(data) {
-				//var slides = slidemake(data);
-				//$('.presentation').html(slides);
-
-				var slides = slidemake2(data);
-				$('.presentation').html(slides[0].toHtml());
-				$('.presentation').center();
-
-
+				show();
 			};
 
 			function next() {
-				$('.presentation').html(SS.next().toHtml());
-				$('.presentation').center();	
+				SS.next();
+				show();
 			};
 
 			function prev() {
-				$('.presentation').html(SS.prev().toHtml());
+				SS.prev();
+				show();
+			};
+
+			function show() {
+				$('.presentation').html(SS.current().toHtml());
 				$('.presentation').center();	
 			};
 
@@ -60,15 +52,17 @@
 				$.ajax({
 						url: file,
 						dataType: 'text',
-						//success: function(data) { inject(data); }
 						success: function(data) { handleLoad(data); }
 				});
 			};
 
 			$(document).ready(function() { loadfile(); });
 
+			// Key bindings
 			$(document).bind('keydown', 'right', function() { next(); }); 
 			$(document).bind('keydown', 'left', function() { prev(); }); 
+
+			// Page Layout
 			$(window).resize(function() { $('.presentation').center(); });
 
 		</script>
