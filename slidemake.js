@@ -14,14 +14,59 @@ function slidemake(text)
 	return html;
 };
 
-// Returns Slide objects
+/**
+ * Returns Slide objects.
+ */
 function slidemake2(text)
 {
-	var slides = [];
 	return split_into_slides(text);
 };
 
+function slidemake3(text)
+{
+	var slides = [];
+	
+	slides = split_into_slides(text);
+	return new Slideshow(slides);
+};
+
 /* =============== NON-PUBLIC API FOLLOWS ============= */
+
+/** 
+ * Represents a slideshow (collection of Slides.)
+ */
+function Slideshow(slides)
+{
+	this._slides = slides || [];
+	this._curSlide = 0;
+
+
+	this.current = function() {
+		return this._slides[this._curSlide];
+	};
+
+	this.next = function() {
+		if(!this.hasNext()) 
+			return;
+		this._curSlide++;
+		return this._slides[this._curSlide];
+	};
+
+	this.prev = function() {
+		if(!this.hasPrev())
+			return;
+		this._curSlide--;
+		return this._slides[this._curSlide];
+	};
+
+	this.hasNext = function() {
+		return (this._curSlide + 1 < this._slides.length);
+	};
+
+	this.hasPrev = function() {
+		return (this._curSlide > 0);
+	};
+};
 
 /**
  * A plaintext/markdown slide that converts into an HTML 
@@ -36,12 +81,20 @@ function Slide(markdown)
 		Slide.convert = new Showdown.converter();
 	};
 
+	/**
+	 * Underlying representation is a Markdown-formatted text doc.
+	 */
+
 	this.getMarkdown = function() { return this._markdown; };
 
 	this.setMarkdown = function(markdown) {
 		this._markdown = markdown;
 		this._html = '';
 	};
+
+	/**
+	 * HTML is generated.
+	 */
 
 	this.toHtml = function() {
 		if(!this._html) {
