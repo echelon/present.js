@@ -1,0 +1,23 @@
+#header {
+	text-align: center;
+	z-index: 1;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 10%;
+	width: 100%;
+	text-align: right;
+	z-index: 1;
+}
+
+#page { 
+	float: left;
+}
+
+body {
+	font-size: 1.3em;
+}
+
