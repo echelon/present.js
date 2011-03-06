@@ -14,9 +14,13 @@ function handleLoad(data) {
 
 	// Key bindings
 	$(document).bind('keydown', 'right', function() { next(); }); 
+	$(document).bind('keydown', 'space', function() { next(); });
+	$(document).bind('keydown', 'return', function() { next(); });
 	$(document).bind('keypress', 'j', function() { next(); }); // Vim-like
 	$(document).bind('keypress', 'l', function() { next(); }); // Vim-like
+
 	$(document).bind('keydown', 'left', function() { prev(); }); 
+	$(document).bind('keypress', 'backspace', function() { prev(); }); // FIXME
 	$(document).bind('keypress', 'k', function() { prev(); }); // Vim-like
 	$(document).bind('keypress', 'h', function() { prev(); }); // Vim-like
 
@@ -27,11 +31,13 @@ function handleLoad(data) {
 function next() {
 	SS.next();
 	show();
+	return false;
 };
 
 function prev() {
 	SS.prev();
 	show();
+	return false;
 };
 
 // TODO: Rename render()
