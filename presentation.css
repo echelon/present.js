@@ -1,16 +1,19 @@
 #header {
 	text-align: center;
 	z-index: 1;
+	color: #f0f0f0;
 }
 
 #footer {
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	height: 10%;
+	height: 9%;
 	width: 100%;
 	text-align: right;
 	z-index: 1;
+	font-size: 0.9em;
+	color: #f0f0f0;
 }
 
 #page { 
@@ -19,5 +22,15 @@
 
 body {
 	font-size: 1.3em;
+	color: #93e690; 
+	background-color: #080808;
+}
+
+.presentation em {
+	color: #fcb666;
+}
+
+.presentation strong {
+	color: #50d6de;
 }
 
