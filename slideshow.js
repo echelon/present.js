@@ -1,3 +1,5 @@
+// XXX: No UI in this file. Define slideshow.ui.js
+
 /**
  * Returns HTML containing the converted slides.
  */
@@ -41,8 +43,16 @@ function Slideshow(slides)
 	this._curSlide = 0;
 
 
-	this.current = function() {
+	this.slide = function() {
 		return this._slides[this._curSlide];
+	};
+
+	this.curSlide = function() {
+		return this._curSlide;
+	};
+
+	this.totalSlides = function() { 
+		return this._slides.length; 
 	};
 
 	this.next = function() {

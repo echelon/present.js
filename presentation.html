@@ -12,11 +12,11 @@
 		<script type="text/javascript" src="./lib/jquery.js"></script>
 		<script type="text/javascript" src="./lib/jquery.getUrlParam.js"></script>
 		<script type="text/javascript" src="./lib/jquery.hotkeys.js"></script>
-		<script type="text/javascript" src="./slidemake.js"></script>
+		<script type="text/javascript" src="./slideshow.js"></script>
+		<script type="text/javascript" src="./slideshow.ui.js"></script>
 		<script type="text/javascript"> 
 
-			// Slideshow Global
-			var SS = null;
+			//var SS = null;
 
 			// From http://stackoverflow.com/questions/210717/what-is-the-best-
 			// way-to-center-a-div-on-the-screen-using-jquery/210733#210733
@@ -31,28 +31,12 @@
 				SS = slidemake3(data);
 				show();
 			};
-
-			function next() {
-				SS.next();
-				show();
-			};
-
-			function prev() {
-				SS.prev();
-				show();
-			};
-
-			function show() {
-				$('.presentation').html(SS.current().toHtml());
-				$('.presentation').center();	
-			};
-
 			function loadfile() {
 				var file = $(document).getUrlParam('mkd') || 'example.mkd';
 				$.ajax({
 						url: file,
 						dataType: 'text',
-						success: function(data) { handleLoad(data); }
+						success: function(data) { handleLoad(data); },
 				});
 			};
 
@@ -60,12 +44,35 @@
 
 			// Key bindings
 			$(document).bind('keydown', 'right', function() { next(); }); 
+			$(document).bind('keypress', 'j', function() { next(); }); // Vim-like
+			$(document).bind('keypress', 'l', function() { next(); }); // Vim-like
 			$(document).bind('keydown', 'left', function() { prev(); }); 
+			$(document).bind('keypress', 'k', function() { prev(); }); // Vim-like
+			$(document).bind('keypress', 'h', function() { prev(); }); // Vim-like
 
 			// Page Layout
 			$(window).resize(function() { $('.presentation').center(); });
 
 		</script>
+		<!-- Inline styles (TEMP) -->
+		<style type="text/css">
+			#header {
+				text-align: center;
+				z-index: 1;
+			}
+			#footer {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				height: 10%;
+				width: 100%;
+				text-align: right;
+				z-index: 1;
+			}
+			body {
+				font-size: 1.3em;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="layout">
