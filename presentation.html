@@ -1,22 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 	<head>
 		<title>Untitled Presentation</title>
-
-		<link rel="stylesheet" type="text/css" href="./presentation.css" />
-
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta http-equiv="content-language" content="en">
+		<!-- Handheld Support -->
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="viewport" 
+			content="width=device-width, height=device-height, 
+			user-scalable=no, target-densitydpi=high-dpi" />
+		<!-- Libraries -->
 		<script type="text/javascript" src="./lib/showdown.js"></script>
 		<script type="text/javascript" src="./lib/jquery.js"></script>
-		<script type="text/javascript" src="./lib/jquery.getUrlParam.js"></script>
 		<script type="text/javascript" src="./lib/jquery.hotkeys.js"></script>
+		<script type="text/javascript" 
+			src="./lib/jquery.getUrlParam.js"></script>
+		<script type="text/javascript" 
+			src="./lib/jquery.ba-hashchange.js"></script>
+		<!-- Slideshow Script -->
 		<script type="text/javascript" src="./slideshow.js"></script>
 		<script type="text/javascript" src="./slideshow.ui.js"></script>
-
+		<!-- Style -->
+		<link rel="stylesheet" type="text/css" href="./presentation.css" />
+		<link type="text/css" rel="stylesheet" href="./mobile.css" 
+			media="handheld" />
+		<! -- Favicon --> 
+		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 		<script type="text/javascript"> 
 			$(document).ready(function() { loadfile(); });
 		</script>
-
 	</head>
 	<body>
 		<div class="layout">
@@ -35,4 +48,3 @@
 
 	</body>
 </html>
-
