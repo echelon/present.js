@@ -202,7 +202,7 @@ jQuery.fn.center = function () {
 };
 
 function loadfile() {
-	var file = $(document).getUrlParam('mkd') || 'example.mkd';
+	var file = $(document).getUrlParam('md') || 'example.md';
 	$.ajax({
 			url: file,
 			dataType: 'text',

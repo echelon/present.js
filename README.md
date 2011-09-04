@@ -1,24 +1,24 @@
+**present.js: simple presentation generator**
+
 Generates an HTML slideshow presentation from Markdown-formatted files.
-_(A work in progress.)_
+These can easily be created and manipulated in a text editor.
 
-Simple slideshows can easily be created and manipulated in a text editor.
-As long as a suitable browser is available, there should be no need for a 
-GUI or for proprietary software. 
+* **presentation.html** loads the slideshow. The url GET parameter 'md'
+  sets the markdown source document filename. The browser should 
+  default to looking in the current directory.
 
-* **presentation.html** runs the slideshow. The url GET parameter 'mkd'
-  sets the source filename. The browser should default to looking in the
-  current directory. (Firefox does.)
+Libraries
+---------
+(All are included in the repository.)
 
-* **presentation-s5.html** runs the slideshow in 
-  [S5 Reloaded 1.3](http://www.netzgesta.de/S5/) instead of my software. 
-  The code to load/interpret Markdown documents is called, but the output
-  format is different. This may be good backup. 
-
-This repository also contains the following:
-
-* [Showdown](http://attacklab.net/showdown/) for markdown. 
 * jQuery and several plugins. 
+* [Backbone.js](http://documentcloud.github.com/backbone/)
+* [Underscore.js](http://documentcloud.github.com/underscore/)
+* [Showdown](http://attacklab.net/showdown/) for markdown parsing
 
-The S5 slideshow system is also included as a backup. 
-
+Alternatives
+------------
+* [S5](http://meyerweb.com/eric/tools/s5/), one of the original HTML slideshow
+  systems. 
+* [Deck.js](http://imakewebthings.github.com/deck.js/)
 
