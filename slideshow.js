@@ -1,126 +1,6 @@
 // XXX: No UI in this file. Define slideshow.ui.js
 
-/**
- * Returns HTML containing the converted slides.
- */
-function slidemake(text)
-{
-	var slides = [];
-	var html = '';
-
-	slides = split_into_slides(text);
-
-	for(var i = 0; i < slides.length; i++){
-		html += slides[i].toHtml(); 
-	};
-	return html;
-};
-
-/**
- * Returns Slide objects.
- */
-function slidemake2(text)
-{
-	return split_into_slides(text);
-};
-
-function slidemake3(text)
-{
-	var slides = [];
-	
-	slides = split_into_slides(text);
-	return new Slideshow(slides);
-};
-
 /* =============== NON-PUBLIC API FOLLOWS ============= */
-
-/** 
- * Represents a slideshow (collection of Slides.)
- */
-function Slideshow(slides)
-{
-	this._slides = slides || [];
-	this._curSlide = 0;
-
-
-	this.slide = function() {
-		return this._slides[this._curSlide];
-	};
-
-	this.curSlide = function() {
-		return this._curSlide;
-	};
-
-	this.totalSlides = function() { 
-		return this._slides.length; 
-	};
-
-	this.next = function() {
-		if(!this.hasNext()) 
-			return;
-		this._curSlide++;
-	};
-
-	this.prev = function() {
-		if(!this.hasPrev())
-			return;
-		this._curSlide--;
-	};
-
-	this.hasNext = function() {
-		return (this._curSlide + 1 < this._slides.length);
-	};
-
-	this.hasPrev = function() {
-		return (this._curSlide > 0);
-	};
-};
-
-/**
- * A plaintext/markdown slide that converts into an HTML 
- * S5 slide. 
- */
-function Slide(markdown)
-{
-	this._markdown = markdown;
-	this._html = '';	
-
-	if(typeof Slide.convert == 'undefined') {
-		Slide.convert = new Showdown.converter();
-	};
-
-	/**
-	 * Underlying representation is a Markdown-formatted text doc.
-	 */
-
-	this.getMarkdown = function() { return this._markdown; };
-
-	this.setMarkdown = function(markdown) {
-		this._markdown = markdown;
-		this._html = '';
-	};
-
-	/**
-	 * HTML is generated.
-	 */
-
-	this.toHtml = function() {
-		if(!this._html) {
-			var h = '<div class="slide">' + 
-					Slide.convert.makeHtml(this._markdown) +
-					'</div>';
-
-			// Custom directives 
-			// 1) Center 
-			h = h.replace(/center:\s+?([^\n]+)/g, "<center>$1</center>");
-			h = h.replace(/centerAll:\s+?([^\n\n|\n\r\n]+)/g, 
-												"<center>$1</center>");
-
-			this._html = h;
-		}
-		return this._html;
-	};
-};
 
 /**
  * Split a markdown document into slides.
@@ -132,13 +12,92 @@ function split_into_slides(text)
 	// Lookahead ensures that this occurs only at a title (as 
 	// designated by arbitrary title text followed by at least 
 	// four underlining ='s on the following line).
-	// XXX: REGEX FAILS UNDER LINUX...
+	// XXX: REGEX FAILS UNDER LINUX/WINDOWS LINE ENDING DISAGREEMENT
+	// FIXME/VERIFY: Line ending encoding may fail when switching 
+	// platforms during editing a file. It happened to me when I 
+	// thought I was prepared! Fix and verify fixed.
 	var regex = /[\n|\n\r]{2,}(?=[^\n|\r]+[\n|\r]{1,2}={4,})/m;
 	var s = text.split(regex);
-	var slides = [];
-	for(var i=0; i < s.length; i++) {
-		slides.push(new Slide(s[i] + "\n\n"));	
-	};
-	return slides;
+	return s;
 };
+
+/**
+ * TODO: Backbone Port
+ */
+var Slide = Backbone.Model.extend({
+
+	initialize: function(attrs)
+	{
+		if(typeof Slide.convert == 'undefined') {
+			Slide._convert = new Showdown.converter();
+		}
+
+		// Arguments
+		this.id = ('id' in attrs)? attrs.id : -1;
+		this.markdown = ('markdown' in attrs)? attrs.markdown : '';
+
+		// Parsed markdown
+		this.htmlString = Slide._convert.makeHtml(this.markdown);
+		this.title = $(this.htmlString).filter('h1').detach().text();
+	
+		this.numImages = 0; // MUCH LATER TODO: Calculate
+
+		/*// Custom directives 
+		// #1 - Center 
+		h = h.replace(/center:\s+?([^\n]+)/g, "<center>$1</center>");
+		h = h.replace(/centerAll:\s+?([^\n\n|\n\r\n]+)/g, 
+											"<center>$1</center>");
+		////////////////////////*/
+	},
+
+	url: function() {
+		var title = function(t) {
+			return t.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');	
+		}
+		return '#' + this.id + '-' + title(this.title);
+	}
+});
+
+var SlideList = Backbone.Collection.extend({
+	model: Slide,
+
+	initialize: function() {
+		this.markdownFull = '';
+		this.totalImages = 0;
+
+		// Current slide
+		this.cur = 0; 
+	},
+
+	current: function() {
+		return this.at(this.cur);
+	},
+
+	next: function() {
+		if(this.cur >= this.length - 1) {
+			return;
+		}
+		this.cur += 1;
+		this.trigger('slides:change');
+	},
+
+	prev: function() {
+		if(this.cur <= 0) {
+			return;
+		}
+		this.cur -= 1;
+		this.trigger('slides:change');
+	},
+
+	view: function(n) {
+		if(n < 0 || n >= this.length) {
+			return;
+		}
+		this.cur = n;
+		this.trigger('slides:change');
+	}
+});
+
+// XXX: SlideList needs events. 
+_.extend(SlideList.prototype, Backbone.Events);
 
