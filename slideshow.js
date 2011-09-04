@@ -28,8 +28,23 @@ var Slide = Backbone.Model.extend({
 
 	initialize: function(attrs)
 	{
+		var parseSlide, slide;
+
 		if(typeof Slide.convert == 'undefined') {
 			Slide._convert = new Showdown.converter();
+		}
+
+		parseSlide = function(markdown) {
+			var regex, matches, ret;
+			regex = /([^\n|\r]+)[\n|\r]{1,2}={4,}/m;
+			ret = {'title': '', 'slide': ''};
+			matches = markdown.match(regex);
+			if(!matches) {
+				return ret;
+			}
+			ret.title = matches[1];
+			ret.slide = markdown.replace(regex, '');
+			return ret;
 		}
 
 		// Arguments
@@ -37,8 +52,9 @@ var Slide = Backbone.Model.extend({
 		this.markdown = ('markdown' in attrs)? attrs.markdown : '';
 
 		// Parsed markdown
-		this.htmlString = Slide._convert.makeHtml(this.markdown);
-		this.title = $(this.htmlString).filter('h1').detach().text();
+		slide = parseSlide(this.markdown);
+		this.htmlString = Slide._convert.makeHtml(slide.slide);
+		this.title = slide.title;
 	
 		this.numImages = 0; // MUCH LATER TODO: Calculate
 
@@ -52,7 +68,9 @@ var Slide = Backbone.Model.extend({
 
 	url: function() {
 		var title = function(t) {
-			return t.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');	
+			return t.toLowerCase()
+					.replace(/\s+/g, '-')
+					.replace(/[^\w-]/g, '');	
 		}
 		return '#' + this.id + '-' + title(this.title);
 	}
@@ -90,6 +108,9 @@ var SlideList = Backbone.Collection.extend({
 	},
 
 	view: function(n) {
+		if(typeof(n) != "number") {
+			return;
+		}
 		if(n < 0 || n >= this.length) {
 			return;
 		}

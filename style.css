@@ -1,5 +1,8 @@
-#header {
+#title {
 	text-align: center;
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid red;
 	z-index: 1;
 	color: #f0f0f0;
 }
@@ -25,6 +28,7 @@
 }
 
 body {
+	margin: 0px;
 	font-size: 1.3em;
 	color: #93e690; 
 	background-color: #080808;

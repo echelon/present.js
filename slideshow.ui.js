@@ -24,64 +24,33 @@ var ClockView = Backbone.View.extend({
 	}
 });
 
-/**
- * TODO DOC
- */
 var SlideView = Backbone.View.extend({
 
-	tagName: 'div',
-
-	constructor: function(attrs)
-	{
-		this.model = ('model' in attrs)? attrs.model : null;
-		this.onDisplay = false;
-	},
-
-	render: function()
-	{
-		// FIXME: Better way to remove header. Best if done in model.
-		$('#currentSlide').html(this.model.htmlString);
-		$('#currentSlide h1').detach(); 
-		this.onDisplay = true;
-		return this;
-	},
-
-	remove: function()
-	{
-		Backbone.View.prototype.remove.call(this); // call super
-		this.onDisplay = false;
-
-		//alert('removed');
-		return this;
-	}
-});
-
-var SlideView2 = Backbone.View.extend({
-	tagName: 'div',
+	//tagName: 'div',
 
 	constructor: function(attrs)
 	{
 		this.collection = ('collection' in attrs)? attrs.collection: null;
 	},
 
-	onSwapSlides: function() 
+	transition: function() 
 	{
+		$('#currentSlide').hide();
+		$('#title').hide();
 
+		this.render();
+
+		$('#currentSlide').fadeIn('fast');
+		$('#title').fadeIn('fast');
 	}, 
 
 	render: function()
 	{
 		var slide = this.collection.current();
-
-		$('#currentSlide').hide();
-
-		// FIXME: Better way to remove header. Best if done in model.
 		$('#currentSlide').html(slide.htmlString);
-		$('#currentSlide h1').detach(); 
-		
-		$('#currentSlide').fadeIn('fast');
-		//$('#currentSlide').slideDown('slow');
-	
+		$('#title').html(slide.title);
+
+		// TODO: Sizing. 
 	}
 
 });
@@ -93,10 +62,24 @@ var AppView = Backbone.View.extend({
 
 	constructor: function(slides) 
 	{
-		var that = this;
+		var that, hashtagSlide;
+		that = this;
+
+		// Parse hashtag to get first slide number
+		hashtagSlide = function() {
+			var m; 
+			if(!location.hash) {
+				return 0;
+			}
+			m = location.hash.match(/^#?(\d+)-?/);
+			if(!m || m.length < 2) {
+				return 0;
+			}
+			return parseInt(m[1]);
+		}
 	
 		this.slides = slides;
-		this.slideView = new SlideView2({collection: slides});
+		this.slideView = new SlideView({collection: slides});
 
 		// Arrow key keybindings
 		$(document).bind('keydown', 'left', function() { slides.prev(); }); 
@@ -107,9 +90,9 @@ var AppView = Backbone.View.extend({
 		$(document).bind('keydown', 'return', function() { slides.next(); });
 
 		// FIXME: Back button goes to previous page, even on non-bubble.
-		$(document).bind('keypress', 'backspace', function() { 
+		/*$(document).bind('keypress', 'backspace', function() { 
 			slides.prev(); 
-		}); 
+		}); */
 
 		// Vim-like keybindings
 		$(document).bind('keypress', 'j', function() { slides.next(); });
@@ -117,18 +100,27 @@ var AppView = Backbone.View.extend({
 		$(document).bind('keypress', 'k', function() { slides.prev(); });
 		$(document).bind('keypress', 'h', function() { slides.prev(); });
 
+		// Hash change
+		$(window).bind('hashchange', function() { 
+			if(slides.cur == hashtagSlide()) {
+				return;
+			}
+			slides.view(hashtagSlide());
+		});
+
 		// Bind slide change event:
 		slides.bind('slides:change', this.render, this);
-
-
-		//TODO $(window).bind('hashchange', function() { loadHash(); });
+		slides.bind('slides:change', this.slideView.transition, 
+				this.slideView);
 
 		// XXX: What was this? Just a recenter?
 		/*// Page Layout
 		$(window).resize(function() { $('.presentation').center(); });*/
 
 		// Render first slide.
-		this.render();
+		//this.render();
+		//
+		this.slides.view(hashtagSlide());
 
 		this.clock = new ClockView;
 		this.clock.render();
@@ -137,14 +129,16 @@ var AppView = Backbone.View.extend({
 	render: function() 
 	{
 		var progress = (this.slides.cur + 1) + '/' + this.slides.length;
+
+		//alert(this.slides.cur);
+
+
+
 		$('#page').html(progress);
 
-		/*
-		var act = _.filter(this.slideViews, function(v) { return v.onDisplay; });
-		_.each(act, function(v) { v.remove(); });
-		*/
+		location.hash = this.slides.current().url();
 
-		this.slideView.render();
+		//this.slideView.render();
 	}
 });
 
