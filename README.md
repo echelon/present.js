@@ -1,5 +1,5 @@
-**present.js: simple presentation generator**
-
+present.js: simple presentation generator
+=========================================
 I had a need for presentations that are easily created and manipulated
 in a text editor. Thus I wrote present.js to generate HTML slideshow 
 presentations from Markdown-formatted files.
