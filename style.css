@@ -1,10 +1,25 @@
+/* Test region used for resizing text dynamically.
+   DO NOT CHANGE */
+#test {
+	visibility: hidden;
+	width: auto;
+	height: auto;
+	position: fixed;
+}
+
 #title {
+	font-size: 200%;
 	text-align: center;
 	margin: 0px;
 	padding: 0px;
-	border: 1px solid red;
 	z-index: 1;
 	color: #f0f0f0;
+}
+
+#header hr {
+	border: 1px solid #fff;
+	padding: 0px;
+	margin: 5px 0px 0px 0px;
 }
 
 #footer {
@@ -15,7 +30,7 @@
 	width: 100%;
 	text-align: right;
 	z-index: 1;
-	font-size: 0.9em;
+	font-size: 130%;
 	color: #f0f0f0;
 }
 
@@ -29,26 +44,34 @@
 
 body {
 	margin: 0px;
-	font-size: 1.3em;
 	color: #93e690; 
 	background-color: #080808;
 }
 
-.presentation {
-	border: 2px solid #111;
-	font-size: 1.3em;
+#currentSlide {
+	font-size: 100%;
+	margin: 0px 15px 0px 15px;
+	padding: 0px;
 }
 
-.presentation em {
+#currentSlide em {
 	color: #fcb666;
 }
 
-.presentation strong {
+#currentSlide strong {
 	color: #50d6de;
 }
 
+ul, ol {
+	list-style-position: outside;
+	margin-left: 1em;
+	margin-right: 1em;
+	/*margin-left: 50px;*/
+	/*padding: 0px;*/
+}
+
 li {
-	margin-top: 30px;
-	margin-bottom: 10px;
+	/*margin-top: 30px;
+	margin-bottom: 10px;*/
 }
 

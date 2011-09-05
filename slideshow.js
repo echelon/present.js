@@ -38,12 +38,16 @@ var Slide = Backbone.Model.extend({
 			var regex, matches, ret;
 			regex = /([^\n|\r]+)[\n|\r]{1,2}={4,}/m;
 			ret = {'title': '', 'slide': ''};
+
 			matches = markdown.match(regex);
 			if(!matches) {
 				return ret;
 			}
 			ret.title = matches[1];
 			ret.slide = markdown.replace(regex, '');
+
+			// Custom directives
+			ret.slide = ret.slide.replace(/\s--\s/g, ' &ndash; ');
 			return ret;
 		}
 
@@ -55,7 +59,7 @@ var Slide = Backbone.Model.extend({
 		slide = parseSlide(this.markdown);
 		this.htmlString = Slide._convert.makeHtml(slide.slide);
 		this.title = slide.title;
-	
+
 		this.numImages = 0; // MUCH LATER TODO: Calculate
 
 		/*// Custom directives 

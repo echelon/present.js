@@ -47,10 +47,69 @@ var SlideView = Backbone.View.extend({
 	render: function()
 	{
 		var slide = this.collection.current();
-		$('#currentSlide').html(slide.htmlString);
 		$('#title').html(slide.title);
+		$('#currentSlide').html(slide.htmlString);
 
-		// TODO: Sizing. 
+		var resizeText = function(slide)
+		{
+			var testDiv, width, height, usedHeight,
+				availWidth, availHeight, curWidth, curHeight, dp;
+			
+			testDiv = $('#test').html(slide.htmlString);
+			testDiv.css('font-size', '100%');
+			//testDiv.css('list-style-position', 'inside');
+
+			width = $(window).width();
+			height = $(window).height();
+
+			usedHeight = 15; // Heuristic, Start w/ '15px' just in case
+			usedHeight += $('#footerCts').outerHeight(true);
+
+			$('#header').children().each(function(i) { 
+				usedHeight += $(this).outerHeight(true);
+			});
+
+			availWidth = width;
+			availHeight = height - usedHeight;
+
+			curWidth = testDiv.outerWidth();
+			curHeight = testDiv.outerHeight();
+
+			var percent = 100;
+			var goodPercent = percent;
+			var maxPercent = 800;
+			var minPercent = 50;
+
+			// Clean whitespace
+			var onlyUsePercent = 0.9;
+
+			while(true) {
+				if(percent >= maxPercent) {
+					break;
+				}
+
+				testDiv.css('font-size', percent + '%');
+
+				curWidth = testDiv.outerWidth();
+				curHeight = testDiv.outerHeight();
+
+				if(curWidth > availWidth) {
+					break;
+				}
+				if(curHeight > availHeight * onlyUsePercent) {
+					break;
+				}
+		
+				goodPercent = percent;
+				percent += 1;
+			}
+			return goodPercent;
+		}
+
+
+		// Resize text to maximum font. 
+		var percent = resizeText(slide);
+		$('#currentSlide').css('font-size', percent + '%');
 	}
 
 });
