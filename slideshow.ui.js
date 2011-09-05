@@ -91,30 +91,42 @@ var SlideView = Backbone.View.extend({
 
 			// Clean whitespace
 			var onlyUsePercent = 0.9;
+			availHeight = availHeight * 0.9; // TODO cleanup
 
-			while(true) {
-				if(percent >= maxPercent) {
+			var max = maxPercent;
+			var min = minPercent;
+
+			var mid;
+			var lastMid;
+			var goodValue;
+			var i = 0;
+
+			// Binary search for optimal value
+			while(min < max) 
+			{
+				lastMid = mid;
+				mid = Math.floor((max + min)/2);
+
+				if(mid == lastMid || i++ > 20) {
 					break;
 				}
 
-				testDiv.css('font-size', percent + '%');
+				testDiv.css('font-size', mid + '%');
 
 				curWidth = testDiv.outerWidth();
 				curHeight = testDiv.outerHeight();
 
-				if(curWidth > availWidth) {
-					break;
+				if(curHeight < availHeight) {
+					min = mid;
+					goodValue = mid;
 				}
-				if(curHeight > availHeight * onlyUsePercent) {
-					break;
+				else if(curWidth > availWidth || curHeight > availHeight) {
+					max = mid;	
 				}
-		
-				goodPercent = percent;
-				percent += 1;
 			}
-			return goodPercent;
-		}
 
+			return goodValue;
+		}
 
 		// Resize text to maximum font. 
 		var percent = resizeText(slide);
