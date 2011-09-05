@@ -35,13 +35,22 @@ var SlideView = Backbone.View.extend({
 
 	transition: function() 
 	{
-		$('#currentSlide').hide();
-		$('#title').hide();
+		var that = this;
+
+		var func = 'easeOutQuart';
+
+		//$('#header').show();
+		//$('#currentSlide').show();
+	
+		// Move out of view.
+		$('#slideWrap').css({
+			'margin-left': '8000px',
+			'overflow': 'hidden'
+		});
 
 		this.render();
 
-		$('#currentSlide').fadeIn('fast');
-		$('#title').fadeIn('fast');
+		$('#slideWrap').animate({marginLeft: '0px'}, 300, func);
 	}, 
 
 	render: function()

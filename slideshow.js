@@ -48,6 +48,8 @@ var Slide = Backbone.Model.extend({
 
 			// Custom directives
 			ret.slide = ret.slide.replace(/\s--\s/g, ' &ndash; ');
+			ret.slide = ret.slide.replace(/(?=\s?)"(?=\S)/g, '&ldquo;');
+			ret.slide = ret.slide.replace(/(?=\S)"(?=\s?)/g, '&rdquo;');
 			return ret;
 		}
 

@@ -7,19 +7,28 @@
 	position: fixed;
 }
 
+/* All other styles */
+
+body {
+	margin: 0px;
+	color: #111;
+	background-color: #fff;
+	font-family: helvetica;
+}
+
 #title {
 	font-size: 200%;
 	text-align: center;
 	margin: 0px;
 	padding: 0px;
 	z-index: 1;
-	color: #f0f0f0;
+	color: #111;
 }
 
 #header hr {
-	border: 1px solid #fff;
+	border: 1px solid #111;
 	padding: 0px;
-	margin: 5px 0px 0px 0px;
+	margin: 15px 8% 0px 8%;
 }
 
 #footer {
@@ -42,12 +51,6 @@
 	float: left;
 }
 
-body {
-	margin: 0px;
-	color: #93e690; 
-	background-color: #080808;
-}
-
 #currentSlide {
 	font-size: 100%;
 	margin: 0px 15px 0px 15px;
@@ -55,11 +58,11 @@ body {
 }
 
 #currentSlide em {
-	color: #fcb666;
+	color: #e75522;
 }
 
 #currentSlide strong {
-	color: #50d6de;
+	color: #2a63a3;
 }
 
 ul, ol {
