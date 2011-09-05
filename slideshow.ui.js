@@ -35,14 +35,7 @@ var SlideView = Backbone.View.extend({
 
 	transition: function() 
 	{
-		var that = this;
-
-		var func = 'easeOutQuart';
-
-		//$('#header').show();
-		//$('#currentSlide').show();
-	
-		// Move out of view.
+		// Move out of view
 		$('#slideWrap').css({
 			'margin-left': '8000px',
 			'overflow': 'hidden'
@@ -50,7 +43,15 @@ var SlideView = Backbone.View.extend({
 
 		this.render();
 
-		$('#slideWrap').animate({marginLeft: '0px'}, 300, func);
+		// Slide animation
+		$('#slideWrap').animate({
+			marginLeft: '0px'
+		}, 400, 'easeOutQuart', function() {
+			// prevent animations from queueing up and stalling
+			// typically occurs when 'rapidly' paging through slides
+			$(this).stop(true); 
+		});
+
 	}, 
 
 	render: function()
@@ -101,7 +102,7 @@ var SlideView = Backbone.View.extend({
 			var goodValue;
 			var i = 0;
 
-			// Binary search for optimal value
+			// XXX: Binary search for optimal font-size percent value
 			while(min < max) 
 			{
 				lastMid = mid;
@@ -116,12 +117,12 @@ var SlideView = Backbone.View.extend({
 				curWidth = testDiv.outerWidth();
 				curHeight = testDiv.outerHeight();
 
-				if(curHeight < availHeight) {
+				if(curWidth > availWidth || curHeight > availHeight) {
+					max = mid;	
+				}
+				else if(curHeight < availHeight) {
 					min = mid;
 					goodValue = mid;
-				}
-				else if(curWidth > availWidth || curHeight > availHeight) {
-					max = mid;	
 				}
 			}
 
@@ -131,6 +132,45 @@ var SlideView = Backbone.View.extend({
 		// Resize text to maximum font. 
 		var percent = resizeText(slide);
 		$('#currentSlide').css('font-size', percent + '%');
+
+		// Resize images (TODO)
+		$('#currentSlide img').each(function() {
+			var that = this;
+			var img = new Image;
+			img.onload = function() {
+				var mw, mh, aw, ah, rw, rh, w, h;
+				mw = $(window).width();
+				mh = $(window).height();
+				aw = this.width;
+				ah = this.height;
+
+				//alert('Height: ' + ah + ', Width: ' + aw);
+				//alert('MaxHeight: ' + mh + ', MaxWidth: ' + mw);
+
+				if(aw > mw || ah > mh) {
+					// Minify
+					rw = mw/aw;
+					rh = mh/ah;
+					if(rw < rh) {
+						w = Math.floor(aw * rw);
+						h = Math.floor(ah * rw);
+					}
+					else {
+						w = Math.floor(aw * rh);
+						h = Math.floor(ah * rh);
+					}
+					$(that).attr({
+						width: w,
+						height: h
+					});
+				}
+				else {
+					// Magnify
+					// TODO
+				}
+			};
+			img.src = $(this).attr('src');
+		});
 	}
 
 });

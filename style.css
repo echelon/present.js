@@ -16,6 +16,22 @@ body {
 	font-family: helvetica;
 }
 
+ul, ol {
+	list-style-position: outside;
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+p {
+	padding: 0px;
+	margin: 0px;
+}
+
+img {
+	padding: 0px;
+	margin: 0px;
+}
+
 #title {
 	font-size: 200%;
 	text-align: center;
@@ -28,7 +44,7 @@ body {
 #header hr {
 	border: 1px solid #111;
 	padding: 0px;
-	margin: 15px 8% 0px 8%;
+	margin: 15px 8% 15px 8%;
 }
 
 #footer {
@@ -40,7 +56,7 @@ body {
 	text-align: right;
 	z-index: 1;
 	font-size: 130%;
-	color: #f0f0f0;
+	color: #333;
 }
 
 #footerCts {
@@ -51,7 +67,12 @@ body {
 	float: left;
 }
 
+#slideWrap {
+}
+
 #currentSlide {
+	top: 500;
+	position: static;
 	font-size: 100%;
 	margin: 0px 15px 0px 15px;
 	padding: 0px;
@@ -63,18 +84,5 @@ body {
 
 #currentSlide strong {
 	color: #2a63a3;
-}
-
-ul, ol {
-	list-style-position: outside;
-	margin-left: 1em;
-	margin-right: 1em;
-	/*margin-left: 50px;*/
-	/*padding: 0px;*/
-}
-
-li {
-	/*margin-top: 30px;
-	margin-bottom: 10px;*/
 }
 
