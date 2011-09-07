@@ -133,6 +133,11 @@ var SlideView = Backbone.View.extend({
 		var percent = resizeText(slide);
 		$('#currentSlide').css('font-size', percent + '%');
 
+		// Highlight code
+		$('pre code').each(function(i, e) { 
+			hljs.highlightBlock(e);
+		});
+
 		// Resize images (TODO)
 		$('#currentSlide img').each(function() {
 			var that = this;
@@ -251,8 +256,6 @@ var AppView = Backbone.View.extend({
 		var progress = (this.slides.cur + 1) + '/' + this.slides.length;
 
 		//alert(this.slides.cur);
-
-
 
 		$('#page').html(progress);
 

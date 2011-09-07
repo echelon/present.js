@@ -1,3 +1,17 @@
+Code 
+====
+
+<pre><code>
+>>> print True
+True
+>>> print False
+False
+def foo(bar):
+	if bar == 1:
+		return 'x'
+	return False
+</code></pre>
+
 Testing 123...
 ==============
 

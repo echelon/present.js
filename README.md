@@ -16,6 +16,7 @@ Libraries
 * [Backbone.js](http://documentcloud.github.com/backbone/) and 
   [Underscore.js](http://documentcloud.github.com/underscore/)
   for architecture
+* [highlight.js](http://softwaremaniacs.org/soft/highlight/en/) for code
 * jQuery and several plugins
 
 Alternatives
