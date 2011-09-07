@@ -138,6 +138,9 @@ var SlideView = Backbone.View.extend({
 			hljs.highlightBlock(e);
 		});
 
+		// Remove <br>
+		$('#currentSlide br').remove();
+
 		// Resize images (TODO)
 		$('#currentSlide img').each(function() {
 			var that = this;

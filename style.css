@@ -22,6 +22,10 @@ ul, ol {
 	margin-right: 1em;
 }
 
+li {
+	margin-bottom: 0.5em;
+}
+
 p {
 	padding: 0px;
 	margin: 0px;
