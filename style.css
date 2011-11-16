@@ -7,6 +7,24 @@
 	position: fixed;
 }
 
+.puff {
+	background-color: #cce;
+	position: absolute;
+	display: block;
+	opacity: 0.05;
+	width: 15px;
+	height: 15px;
+	z-index: -1;
+	overflow: hidden;
+}
+
+.cloud {
+	position: absolute;
+	display: block;
+	border: 5px solid #f00;
+}
+
+
 /* All other styles */
 
 body {
