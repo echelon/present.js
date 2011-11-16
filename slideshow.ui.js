@@ -238,6 +238,24 @@ var AppView = Backbone.View.extend({
 		$(document).bind('keypress', 'k', function() { slides.prev(); });
 		$(document).bind('keypress', 'h', function() { slides.prev(); });
 
+		// Mouse click. (May not be desirable.)
+		//$(document).bind('click', function() { slides.next(); });
+		$(document).mousedown(function(ev) {
+			switch(ev.which) {
+				case 1: // Left click
+					slides.next();
+					break;
+				case 2: // Middle click
+					break;
+				case 3: // Right click
+					slides.prev();
+					break;
+			}
+		});
+
+		// Disable context menu. Again, maybe not a great idea...
+		$(document).bind('contextmenu', function() { return false; });
+
 		// Hash change
 		$(window).bind('hashchange', function() { 
 			if(slides.cur == hashtagSlide()) {
