@@ -146,7 +146,7 @@ var SlideView = Backbone.View.extend({
 
 		// Re-render math
 		// FIXME: Incorrectly sizes text... Need to hook into async api.
-		MathJax.Hub.Typeset();
+		//MathJax.Hub.Typeset(); // XXX: MathJax temporarily removed.
 
 		// Remove <br>
 		$('#currentSlide br').remove();
