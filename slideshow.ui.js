@@ -138,6 +138,16 @@ var SlideView = Backbone.View.extend({
 			hljs.highlightBlock(e);
 		});
 
+		// XXX: TEMPORARY FIX. REmove duplicated youtube video bug
+		var iframe = $('iframe');
+		if(iframe.length >= 2) {
+			iframe.last().remove();
+		}
+
+		// Re-render math
+		// FIXME: Incorrectly sizes text... Need to hook into async api.
+		MathJax.Hub.Typeset();
+
 		// Remove <br>
 		$('#currentSlide br').remove();
 

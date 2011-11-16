@@ -26,6 +26,14 @@ li {
 	margin-bottom: 0.5em;
 }
 
+li ul, li ol {
+	margin-top: 0.5em;
+}
+
+li ol {
+	list-style-type: upper-alpha;
+}
+
 p {
 	padding: 0px;
 	margin: 0px;
