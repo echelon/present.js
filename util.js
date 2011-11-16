@@ -13,6 +13,9 @@ randInt = function(a, b) {
 // The following is an in-progress adaptation of the Reddit "downtime"
 // page 'cloud background animation', which I find really cool and somewhat
 // relaxing. I don't think it will distract from the presentation at all. 
+// XXX: The code is stolen. It's probably not open source or safe to use.
+// I need to rewrite it. (Normally I would never do this, but I have a
+// presentation to give in a few hours...)
 //
 // TODO: Page change animation is affected by this. I need to lower the 
 // CPU load so everything is smooth and minimal.
