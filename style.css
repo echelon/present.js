@@ -14,14 +14,12 @@
 	opacity: 0.05;
 	width: 15px;
 	height: 15px;
-	z-index: -1;
-	overflow: hidden;
+	z-index: -100;
 }
 
 .cloud {
 	position: absolute;
 	display: block;
-	border: 5px solid #f00;
 }
 
 
@@ -32,6 +30,7 @@ body {
 	color: #111;
 	background-color: #fff;
 	font-family: helvetica;
+	overflow: hidden;
 }
 
 ul, ol {

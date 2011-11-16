@@ -10,8 +10,12 @@ randInt = function(a, b) {
 };
 
 // ==========================================================
+// The following is an in-progress adaptation of the Reddit "downtime"
+// page 'cloud background animation', which I find really cool and somewhat
+// relaxing. I don't think it will distract from the presentation at all. 
 //
-//
+// TODO: Page change animation is affected by this. I need to lower the 
+// CPU load so everything is smooth and minimal.
 
 function randomInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min
@@ -43,6 +47,10 @@ function makeCloud() {
 				puff.className = 'puff'
 				puff.style.left = (x + w) * PIXEL_SIZE + 'px'
 				puff.style.top = (y + h) * PIXEL_SIZE + 'px'
+
+				$(puff).data('left', (x+w)*PIXEL_SIZE);
+				$(puff).data('top', (y+h)*PIXEL_SIZE);
+
 				cloud.appendChild(puff)
 			}
 
@@ -87,6 +95,26 @@ function animateClouds() {
  
 	var newClouds = []
 
+	/* Too CPU intensive... why?
+	$(".puff").each(function(i, attr){
+		var x = $(this).data('x') || 0;
+		//this.style.left = this.
+		x += dx;
+		$(this).data('x', x);
+		$(this).css({
+			left: x + 'px',
+		});
+	});*/
+
+	/*$(".puff").each(function(i, attr){
+		var top = $(this).data('top') || 0;
+		var left = $(this).data('left') || 0;
+		if(top > $(window).height() || left > $(window).width()) {
+			$(this).remove();
+		}
+	});*/
+
+
 	// Move the clouds!
 	for (var i=0; i < clouds.length; i++) 
 	{
@@ -108,7 +136,7 @@ function start() {
 	if (arguments.callee.ran) { return; }
 	arguments.callee.ran = true
  
-	setInterval(animateClouds, 2*1000)
+	setInterval(animateClouds, 5*1000)
  
 	for (n=0; n<50; n++) {
 		addCloud(true)
