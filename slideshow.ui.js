@@ -239,7 +239,9 @@ var AppView = Backbone.View.extend({
 		$(document).bind('keypress', 'h', function() { slides.prev(); });
 
 		// Mouse click. (May not be desirable.)
-		//$(document).bind('click', function() { slides.next(); });
+		// Disable context menu. Again, maybe not a great idea...
+		$(document).bind('click', function() { slides.next(); });
+		$(document).bind('contextmenu', function() { return false; });
 		$(document).mousedown(function(ev) {
 			switch(ev.which) {
 				case 1: // Left click
@@ -252,9 +254,6 @@ var AppView = Backbone.View.extend({
 					break;
 			}
 		});
-
-		// Disable context menu. Again, maybe not a great idea...
-		$(document).bind('contextmenu', function() { return false; });
 
 		// Hash change
 		$(window).bind('hashchange', function() { 
@@ -347,11 +346,10 @@ function show() {
 // way-to-center-a-div-on-the-screen-using-jquery/210733#210733
 jQuery.fn.center = function () {
 	this.css("position","absolute");
-	this.css("top", 
-			($(window).height() - this.height()) / 
-			2+$(window).scrollTop() + "px");
+	this.css("top", ($(window).height() - this.height()) / 
+					2+$(window).scrollTop() + "px");
 	this.css("left", ($(window).width() - this.width()) / 
-			2+$(window).scrollLeft() + "px");
+					2+$(window).scrollLeft() + "px");
 	return this;
 };
 

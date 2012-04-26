@@ -8,7 +8,7 @@
 }
 
 .puff {
-	background-color: #cce;
+	background-color: #aad;
 	position: absolute;
 	display: block;
 	opacity: 0.05;
@@ -50,10 +50,16 @@ li ol {
 	list-style-type: upper-alpha;
 }
 
+li li {
+	font-size: smaller;
+}
+
 p {
 	padding: 0px;
 	margin: 0px;
 }
+
+p + p { padding: 1em 0px 0px 0px; }
 
 img {
 	padding: 0px;
