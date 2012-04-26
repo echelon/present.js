@@ -8,7 +8,7 @@
 }
 
 .puff {
-	background-color: #aad;
+	background-color: #111;
 	position: absolute;
 	display: block;
 	opacity: 0.05;
@@ -26,8 +26,8 @@
 
 body {
 	margin: 0px;
-	color: #111;
-	background-color: #fff;
+	color: #ff0;
+	background-color: #080808;
 	font-family: helvetica;
 	overflow: hidden;
 }
@@ -72,11 +72,11 @@ img {
 	margin: 0px;
 	padding: 0px;
 	z-index: 1;
-	color: #111;
+	color: #f0f0f0;
 }
 
 #header hr {
-	border: 1px solid #111;
+	border: 1px solid #f0f0f0;
 	padding: 0px;
 	margin: 15px 8% 15px 8%;
 }
@@ -90,7 +90,7 @@ img {
 	text-align: right;
 	z-index: 1;
 	font-size: 130%;
-	color: #333;
+	color: #f0f0f0;
 }
 
 #footerCts {
@@ -113,10 +113,10 @@ img {
 }
 
 #currentSlide em {
-	color: #e75522;
+	color: #d93222;
 }
 
 #currentSlide strong {
-	color: #2a63a3;
+	color: #d93222;
 }
 
