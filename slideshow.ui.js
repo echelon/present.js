@@ -8,16 +8,43 @@ var ClockView = Backbone.View.extend({
 
 	constructor: function() {
 		var that = this;
-		this.timer = setInterval(function() {that.render()}, 1000*10);
+		this.timer = setInterval(function() {that.render()}, 1000 * 10);
+		this.startClock = (new Date()).getTime();
+
+		// Timer URL parameter
+		// A timer for how long presentation must be... (minutes)
+		var time = parseInt($(document).getUrlParam('t')) || 15;
+		this.numMinutes = time;
 	},
 
 	render: function()
 	{
+		var that = this;
 		var getTime = function() {
-			var zf, d;
+			var zf, d; 
+			var dsec, dmin, perc, clock;
+
+			// Format time with leading zeros
 			zf = function(n) { return (n>9)? n : "0" + n; };
+
+			// Format minutes elapsed (nice rounding)
+			minf = function(n) {
+				var i;
+				i = parseInt(n);
+				if (n - i > 0.49) {
+					i += 0.5;
+				}
+				return i;
+			};
+
 			d = new Date();
-			return d.getHours() + ':' + zf(d.getMinutes());
+			dsec = (d.getTime() - that.startClock) / 1000;
+			dmin = dsec / 60;
+
+			perc = parseInt(dmin / that.numMinutes * 100);
+			clock = d.getHours() + ':' + zf(d.getMinutes());
+
+			return minf(dmin) + 'm | ' + perc + '% | ' + clock;
 		}
 
 		$(this.el).html(getTime());
