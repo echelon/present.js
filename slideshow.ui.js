@@ -22,17 +22,24 @@ var ClockView = Backbone.View.extend({
 		var that = this;
 		var getTime = function() {
 			var zf, d; 
-			var dsec, dmin, perc, clock;
+			var dsec, dmin, perc, clock, elap;
 
 			// Format time with leading zeros
 			zf = function(n) { return (n>9)? n : "0" + n; };
 
 			// Format minutes elapsed (nice rounding)
 			minf = function(n) {
-				var i;
+				var i, d;
 				i = parseInt(n);
-				if (n - i > 0.49) {
+				d = n - i;
+				if (d > 0.74) {
+					i += 0.75;
+				}
+				else if (n - i > 0.49) {
 					i += 0.5;
+				}
+				else if (n - i > 0.24) {
+					i += 0.25;
 				}
 				return i;
 			};
@@ -43,8 +50,9 @@ var ClockView = Backbone.View.extend({
 
 			perc = parseInt(dmin / that.numMinutes * 100);
 			clock = d.getHours() + ':' + zf(d.getMinutes());
+			elap = minf(dmin) + ' / ' + that.numMinutes + 'm';
 
-			return minf(dmin) + 'm | ' + perc + '% | ' + clock;
+			return elap + ' (' + perc + '%) | ' + clock;
 		}
 
 		$(this.el).html(getTime());
