@@ -30,6 +30,9 @@ body {
 	background-color: #080808;
 	font-family: helvetica;
 	overflow: hidden;
+	/* Disallow selection of text */
+	-moz-user-select: none;
+	-webkit-user-select: none;
 }
 
 ul, ol {
