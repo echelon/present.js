@@ -71,7 +71,7 @@ var SlideView = Backbone.View.extend({
 	transition: function() 
 	{
 		// Move out of view
-		$('#slideWrap').css({
+		/*$('#slideWrap').css({
 			'margin-left': '8000px',
 			'overflow': 'hidden'
 		});
@@ -85,14 +85,17 @@ var SlideView = Backbone.View.extend({
 			// prevent animations from queueing up and stalling
 			// typically occurs when 'rapidly' paging through slides
 			$(this).stop(true); 
-		});
+		});*/
+
+		$('#slideWrap').hide();
+		this.render();
+		$('#slideWrap').fadeIn(20);
 
 	}, 
 
 	render: function()
 	{
 		var slide = this.collection.current();
-		$('#title').html(slide.title);
 		$('#currentSlide').html(slide.htmlString);
 
 		var resizeText = function(slide)
@@ -165,8 +168,8 @@ var SlideView = Backbone.View.extend({
 		}
 
 		// Resize text to maximum font. 
-		var percent = resizeText(slide);
-		$('#currentSlide').css('font-size', percent + '%');
+		//var percent = resizeText(slide);
+		//$('#currentSlide').css('font-size', percent + '%');
 
 		// Highlight code
 		$('pre code').each(function(i, e) { 
@@ -331,37 +334,6 @@ var AppView = Backbone.View.extend({
 });
 
 
-/**
- * Slideshow Global
- */
-
-// TODO: Rename init()
-function handleLoad(data)
-{
-	var split, slides, i, slide;
-
-	split = split_into_slides(data);
-
-	slides = new SlideList;
-
-	for(i = 0; i < split.length; i++) {
-		slide = new Slide({id: i, markdown:split[i]});
-		slides.add(slide);
-	}
-
-	/*
-	slides.bind('all', function() { alert('all'); }, this);
-	slides.bind('remove', function() { alert('removed'); }, this);
-	slides.bind('test', function() { alert('test'); }, this);
-	*/
-
-	//slides.remove(slides.at(1));
-	//slides.trigger('test');
-
-	window.app = new AppView(slides);
-};
-
-
 
 // TODO: Rename render()
 function show() {
@@ -386,14 +358,5 @@ jQuery.fn.center = function () {
 	this.css("left", ($(window).width() - this.width()) / 
 					2+$(window).scrollLeft() + "px");
 	return this;
-};
-
-function loadfile() {
-	var file = $(document).getUrlParam('md') || 'example.md';
-	$.ajax({
-			url: file,
-			dataType: 'text',
-			success: function(data) { handleLoad(data); },
-	});
 };
 

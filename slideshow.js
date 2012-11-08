@@ -8,17 +8,17 @@
  */
 function split_into_slides(text)
 {
-	// Split at two or more line breaks (Linux or Win)
-	// Lookahead ensures that this occurs only at a title (as 
-	// designated by arbitrary title text followed by at least 
-	// four underlining ='s on the following line).
-	// XXX: REGEX FAILS UNDER LINUX/WINDOWS LINE ENDING DISAGREEMENT
-	// FIXME/VERIFY: Line ending encoding may fail when switching 
-	// platforms during editing a file. It happened to me when I 
-	// thought I was prepared! Fix and verify fixed.
-	var regex = /[\n|\n\r]{2,}(?=[^\n|\r]+[\n|\r]{1,2}={4,})/m;
-	var s = text.split(regex);
+	var s = text.split(/---/m);
 	return s;
+};
+
+function loadfile() {
+	var file = $(document).getUrlParam('md') || 'exampleNew.md';
+	$.ajax({
+		url: file,
+		dataType: 'text',
+		success: function(data) { handleLoad(data); },
+	});
 };
 
 /**
@@ -35,16 +35,8 @@ var Slide = Backbone.Model.extend({
 		}
 
 		parseSlide = function(markdown) {
-			var regex, matches, ret;
-			regex = /([^\n|\r]+)[\n|\r]{1,2}={4,}/m;
-			ret = {'title': '', 'slide': ''};
-
-			matches = markdown.match(regex);
-			if(!matches) {
-				return ret;
-			}
-			ret.title = matches[1];
-			ret.slide = markdown.replace(regex, '');
+			var ret = {'title': '', 'slide': ''};
+			ret.slide = markdown;
 
 			// Custom directives
 			ret.slide = ret.slide.replace(/\s--\s/g, ' &ndash; ');
@@ -83,6 +75,7 @@ var Slide = Backbone.Model.extend({
 	}
 });
 
+// TODO: Rename SlideDeck. Hipper.
 var SlideList = Backbone.Collection.extend({
 	model: Slide,
 
@@ -128,4 +121,35 @@ var SlideList = Backbone.Collection.extend({
 
 // XXX: SlideList needs events. 
 _.extend(SlideList.prototype, Backbone.Events);
+
+/**
+ * Slideshow Global
+ */
+
+// TODO: Rename init()
+function handleLoad(data)
+{
+	var split, slides, i, slide;
+
+	split = split_into_slides(data);
+
+	slides = new SlideList;
+
+	for(i = 0; i < split.length; i++) {
+		slide = new Slide({id: i, markdown:split[i]});
+		slides.add(slide);
+	}
+
+	/*
+	slides.bind('all', function() { alert('all'); }, this);
+	slides.bind('remove', function() { alert('removed'); }, this);
+	slides.bind('test', function() { alert('test'); }, this);
+	*/
+
+	//slides.remove(slides.at(1));
+	//slides.trigger('test');
+
+	window.app = new AppView(slides);
+};
+
 
