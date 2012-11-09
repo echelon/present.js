@@ -35,15 +35,26 @@ var Slide = Backbone.Model.extend({
 		}
 
 		parseSlide = function(markdown) {
-			var ret = {'title': '', 'slide': ''};
-			ret.slide = markdown;
+			var tmp = '', blocks = [], i = 0;
 
 			// Custom directives
-			ret.slide = ret.slide.replace(/\s--\s/g, ' &ndash; ');
+			tmp = markdown.replace(/\s--\s/g, ' &ndash; ');
+
+			// Split into blocks
+			blocks = tmp.split(/\n{2}/);
+
+			for(i = 0; i < blocks.length; true) {
+				if(blocks[i]) {
+					i++;
+					continue;
+				}
+				blocks.splice(i, 1);
+			}
+			
 			// FIXME: Quotes mess up html, etc.
 			//ret.slide = ret.slide.replace(/(?=\s?)"(?=\S)/g, '&ldquo;');
 			//ret.slide = ret.slide.replace(/(?=\S)"(?=\s?)/g, '&rdquo;');
-			return ret;
+			return blocks;
 		}
 
 		// Arguments
@@ -51,9 +62,12 @@ var Slide = Backbone.Model.extend({
 		this.markdown = ('markdown' in attrs)? attrs.markdown : '';
 
 		// Parsed markdown
-		slide = parseSlide(this.markdown);
-		this.htmlString = Slide._convert.makeHtml(slide.slide);
-		this.title = slide.title;
+		blocks = parseSlide(this.markdown);
+
+		this.htmlBlocks = [];
+		for(i = 0; i < blocks.length; i++) {
+			this.htmlBlocks.push(Slide._convert.makeHtml(blocks[i]));
+		}
 
 		this.numImages = 0; // MUCH LATER TODO: Calculate
 
@@ -66,12 +80,12 @@ var Slide = Backbone.Model.extend({
 	},
 
 	url: function() {
-		var title = function(t) {
+		/*var title = function(t) {
 			return t.toLowerCase()
 					.replace(/\s+/g, '-')
 					.replace(/[^\w-]/g, '');	
-		}
-		return '#' + this.id + '-' + title(this.title);
+		}*/
+		return '#' + this.id; // + '-' + title(this.title);
 	}
 });
 

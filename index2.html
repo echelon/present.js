@@ -17,8 +17,10 @@
 	<script type="text/javascript" src="./lib/underscore.js"></script>
 	<script type="text/javascript" src="./lib/backbone.js"></script>
 	<script type="text/javascript" src="./lib/showdown.js"></script>
-	<script type="text/javascript" src="./lib/highlight.js"></script>
-	<script type="text/javascript" src="./lib/highlight.pack.js"></script>
+	<script type="text/javascript" 
+		src="./js/lib/jquery.fittext.js"></script>
+	<script type="text/javascript" 
+		src="./js/lib/bigtext.js"></script>
 	<script type="text/javascript" 
 		src="./lib/jquery.getUrlParam.js"></script>
 	<script type="text/javascript" 
@@ -29,19 +31,17 @@
 	<script type="text/javascript" src="./util.js"></script>
 	<script type="text/javascript" src="./slideshow.js"></script>
 	<script type="text/javascript" src="./slideshow.ui.js"></script>
+
 	<!-- Style -->
 	<link rel="stylesheet" type="text/css" href="./style.css" />
-	<link type="text/css" rel="stylesheet" href="./mobile.css" 
-		media="handheld" />
-	<link rel="stylesheet" type="text/css" 
-		href="./lib/highlight/github.css" />
+
 	<! -- Favicon --> 
 	<link rel="icon" href="./favicon.ico" type="image/x-icon">
 	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 	<script type="text/javascript"> 
 		$(document).ready(function() { 
 				loadfile(); 
-				start();
+				//start();
 		});
 	</script>
 
@@ -50,8 +50,7 @@
 
   </head>
   <body>
-    <div id="main">
-	<div class="container-fluid">
+	<div id="main" class="container-fluid">
 		<div class="row-fluid">
 			<!--<div class="span1"></div>-->
 			<div class="span12">
@@ -69,11 +68,11 @@
 			</div>
 		</div>
 		<!--<div class="span1"></div>-->
-	</div>
-	<!-- Test div is used to resize text dynamically. DO NOT REMOVE -->
-	<div id="test"></div>
 
-    </div>
+		<!-- Test div is used to resize text dynamically. DO NOT REMOVE -->
+		<div id="test"></div>
+
+	</div> <!-- #main .container-fluid -->
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>

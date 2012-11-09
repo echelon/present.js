@@ -1,5 +1,12 @@
-/* Test region used for resizing text dynamically.
-   DO NOT CHANGE */
+div {
+	/*padding:5px;*/
+	background-color: rgba(255, 0, 0, 0.2);
+}
+
+/* 
+	The #test region is used for resizing text 
+	dynamically. DO NOT CHANGE! 
+*/
 #test {
 	visibility: hidden;
 	width: auto;
@@ -70,7 +77,7 @@ img {
 }
 
 #title {
-	font-size: 200%;
+	/*font-size: 200%;*/
 	text-align: center;
 	margin: 0px;
 	padding: 0px;
@@ -92,7 +99,7 @@ img {
 	width: 100%;
 	text-align: right;
 	z-index: 1;
-	font-size: 130%;
+	/*font-size: 130%;*/
 	color: #f0f0f0;
 }
 
@@ -110,9 +117,11 @@ img {
 #currentSlide {
 	top: 500;
 	position: static;
-	font-size: 100%;
+	/*font-size: 100%;*/
+	/*font-size: 5em;*/
+	line-height: normal; /* Resets from Bootstrap */
 	margin: 0px 15px 0px 15px;
-	padding: 0px;
+	padding: 5px;
 }
 
 #currentSlide em {
@@ -121,5 +130,11 @@ img {
 
 #currentSlide strong {
 	color: #d93222;
+}
+
+#currentSlide img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 

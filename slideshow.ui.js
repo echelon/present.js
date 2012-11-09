@@ -66,6 +66,10 @@ var SlideView = Backbone.View.extend({
 	constructor: function(attrs)
 	{
 		this.collection = ('collection' in attrs)? attrs.collection: null;
+
+		// XXX: Bad spot for this? I have no idea.
+		// I don't remember the logical scope here
+		//$('#currentSlide').fitText();
 	},
 
 	transition: function() 
@@ -96,7 +100,28 @@ var SlideView = Backbone.View.extend({
 	render: function()
 	{
 		var slide = this.collection.current();
-		$('#currentSlide').html(slide.htmlString);
+
+		var blockBootstrapify = function(blocks) {
+			var html = '';
+			var len = blocks.length;
+
+			if (blocks.length % 2 == 0) {
+				for(var i = 0; i < blocks.length; i++) {
+					html += '<div class="span6">' + blocks[i] + '</div>\n';
+				}
+			}
+			else if (blocks.length >= 1)  {
+				html += '<div class="span12">' + blocks[0] + '</div>\n';
+				for(var i = 1; i < blocks.length; i++) {
+					html += '<div class="span6">' + blocks[i] + '</div>\n';
+				}
+			}
+			return html;
+		}
+
+		var html = blockBootstrapify(slide.htmlBlocks);
+
+		$('#currentSlide').html(html);
 
 		var resizeText = function(slide)
 		{
@@ -168,15 +193,11 @@ var SlideView = Backbone.View.extend({
 		}
 
 		// Resize text to maximum font. 
-		//var percent = resizeText(slide);
-		//$('#currentSlide').css('font-size', percent + '%');
+		var percent = resizeText(slide);
+		$('#currentSlide').css('font-size', percent/2 + '%');
+		$('#currentSlide').height(10000);
 
-		// Highlight code
-		$('pre code').each(function(i, e) { 
-			hljs.highlightBlock(e);
-		});
-
-		// XXX: TEMPORARY FIX. REmove duplicated youtube video bug
+		// XXX: TEMPORARY FIX. Remove duplicated youtube video bug
 		var iframe = $('iframe');
 		if(iframe.length >= 2) {
 			iframe.last().remove();
@@ -187,7 +208,7 @@ var SlideView = Backbone.View.extend({
 		//MathJax.Hub.Typeset(); // XXX: MathJax temporarily removed.
 
 		// Remove <br>
-		$('#currentSlide br').remove();
+		//$('#currentSlide br').remove();
 
 		// Resize images (TODO)
 		$('#currentSlide img').each(function() {
@@ -228,7 +249,6 @@ var SlideView = Backbone.View.extend({
 			img.src = $(this).attr('src');
 		});
 	}
-
 });
 
 /**
