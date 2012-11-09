@@ -63,6 +63,10 @@ var SlideView = Backbone.View.extend({
 
 	//tagName: 'div',
 
+	// Animation used.
+	// Options are 'slide', and 'fade'.
+	animation: 'slide',
+
 	constructor: function(attrs)
 	{
 		this.collection = ('collection' in attrs)? attrs.collection: null;
@@ -74,26 +78,35 @@ var SlideView = Backbone.View.extend({
 
 	transition: function() 
 	{
-		// Move out of view
-		/*$('#slideWrap').css({
-			'margin-left': '8000px',
-			'overflow': 'hidden'
-		});
+		switch(this.animation) {
+			case 'slide':
+				// Move out of view
+				$('#table').css({
+					'margin-left': '8000px',
+					'overflow': 'hidden'
+				});
 
-		this.render();
+				this.render();
 
-		// Slide animation
-		$('#slideWrap').animate({
-			marginLeft: '0px'
-		}, 400, 'easeOutQuart', function() {
-			// prevent animations from queueing up and stalling
-			// typically occurs when 'rapidly' paging through slides
-			$(this).stop(true); 
-		});*/
+				// Slide animation
+				$('#table').animate({
+					marginLeft: '0px'
+				}, 400, 'easeOutQuart', function() {
+					// prevent animations from queueing up and stalling
+					// typically occurs when 'rapidly' paging through slides
+					$(this).stop(true); 
+				});
+				break;
 
-		$('#slideWrap').hide();
-		this.render();
-		$('#slideWrap').fadeIn(20);
+			case 'fade':
+				$('#slideWrap').hide();
+				this.render();
+				$('#slideWrap').fadeIn(20);
+				break;
+
+			default:
+				this.render();
+		}
 
 	}, 
 
@@ -101,27 +114,48 @@ var SlideView = Backbone.View.extend({
 	{
 		var slide = this.collection.current();
 
-		var blockBootstrapify = function(blocks) {
+		var buildTable = function(blocks) {
 			var html = '';
-			var len = blocks.length;
-
-			if (blocks.length % 2 == 0) {
-				for(var i = 0; i < blocks.length; i++) {
-					html += '<div class="span6">' + blocks[i] + '</div>\n';
-				}
-			}
-			else if (blocks.length >= 1)  {
-				html += '<div class="span12">' + blocks[0] + '</div>\n';
-				for(var i = 1; i < blocks.length; i++) {
-					html += '<div class="span6">' + blocks[i] + '</div>\n';
-				}
+			switch(blocks.length) {
+				case 1:
+					html = '<tr>' + 
+						   '<td class="c100-100">' + blocks[0] + '</td>' + 
+						   '</tr>';
+					break;
+				case 2:
+					html = '<tr>' + 
+						   '<td class="c50-100">' + blocks[0] + '</td>' + 
+						   '<td class="c50-100">' + blocks[1] + '</td>' + 
+						   '</tr>';
+					break;
+				case 3:
+					html = '<tr>' + 
+						   '<td class="c50-50">' + blocks[0] + '</td>' + 
+						   '<td class="c50-100" rowspan="2">' + 
+						   		blocks[1] + '</td>' + 
+						   '</tr>' + 
+						   '<tr>' + 
+						   '<td class="c50-50">' + blocks[2] + '</td>' + 
+						   '</tr>';
+					break;
+				case 4:
+					html = '<tr>' + 
+						   '<td class="c50-50">' + blocks[0] + '</td>' + 
+						   '<td class="c50-50">' + blocks[1] + '</td>' + 
+						   '</tr>' + 
+						   '<tr>' + 
+						   '<td class="c50-50">' + blocks[2] + '</td>' + 
+						   '<td class="c50-50">' + blocks[3] + '</td>' + 
+						   '</tr>';
+					break;
+				default:
+					// Anything other than 1-4 blocks is an error!
+					break; 
 			}
 			return html;
 		}
 
-		var html = blockBootstrapify(slide.htmlBlocks);
-
-		$('#currentSlide').html(html);
+		$('#table').html(buildTable(slide.htmlBlocks));
 
 		var resizeText = function(slide)
 		{
@@ -203,50 +237,38 @@ var SlideView = Backbone.View.extend({
 			iframe.last().remove();
 		}
 
-		// Re-render math
-		// FIXME: Incorrectly sizes text... Need to hook into async api.
-		//MathJax.Hub.Typeset(); // XXX: MathJax temporarily removed.
+		// Resize images
+		$('#table td img').each(function() {
+			var tdw = $(this).parents('td').width(),
+				tdh = $(this).parents('td').height();
 
-		// Remove <br>
-		//$('#currentSlide br').remove();
+			$(this).load(function() {
+				var nw = 0, nh = 0, rw = 0, rh = 0,
+					iw = $(this).width(),
+					ih = $(this).height();
 
-		// Resize images (TODO)
-		$('#currentSlide img').each(function() {
-			var that = this;
-			var img = new Image;
-			img.onload = function() {
-				var mw, mh, aw, ah, rw, rh, w, h;
-				mw = $(window).width();
-				mh = $(window).height();
-				aw = this.width;
-				ah = this.height;
-
-				//alert('Height: ' + ah + ', Width: ' + aw);
-				//alert('MaxHeight: ' + mh + ', MaxWidth: ' + mw);
-
-				if(aw > mw || ah > mh) {
-					// Minify
-					rw = mw/aw;
-					rh = mh/ah;
-					if(rw < rh) {
-						w = Math.floor(aw * rw);
-						h = Math.floor(ah * rw);
-					}
-					else {
-						w = Math.floor(aw * rh);
-						h = Math.floor(ah * rh);
-					}
-					$(that).attr({
-						width: w,
-						height: h
-					});
+				// Minify or magnify 
+				rw = tdw/iw;
+				rh = tdh/ih;
+				if(rw < rh) {
+					nw = Math.floor(iw * rw);
+					nh = Math.floor(ih * rw);
 				}
 				else {
-					// Magnify
-					// TODO
+					nw = Math.floor(iw * rh);
+					nh = Math.floor(ih * rh);
 				}
-			};
-			img.src = $(this).attr('src');
+
+				$(this).attr({
+					width: nw,
+					height: nh,
+				})
+				.css({
+					display: 'block',
+				})
+				.show();
+
+			});
 		});
 	}
 });

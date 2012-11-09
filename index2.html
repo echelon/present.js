@@ -1,79 +1,55 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<!-- XXX: BOOTSTRAP PORT! -->
     <title>Presentation</title>
-
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-
-	<!-- Responsive Design -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
-	<!-- Old junk -->
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script type="text/javascript" src="./lib/jquery.hotkeys.js"></script>
-	<script type="text/javascript" src="./lib/underscore.js"></script>
-	<script type="text/javascript" src="./lib/backbone.js"></script>
-	<script type="text/javascript" src="./lib/showdown.js"></script>
-	<script type="text/javascript" 
-		src="./js/lib/jquery.fittext.js"></script>
-	<script type="text/javascript" 
-		src="./js/lib/bigtext.js"></script>
-	<script type="text/javascript" 
-		src="./lib/jquery.getUrlParam.js"></script>
-	<script type="text/javascript" 
-		src="./lib/jquery.ba-hashchange.js"></script>
-	<script type="text/javascript" 
-		src="./lib/jquery.easing.js"></script>
-	<!-- Slideshow Script -->
-	<script type="text/javascript" src="./util.js"></script>
-	<script type="text/javascript" src="./slideshow.js"></script>
-	<script type="text/javascript" src="./slideshow.ui.js"></script>
+    <link href="css/reset.css" rel="stylesheet" type="text/css">
+	<link href="style.css" rel="stylesheet" type="text/css">
 
-	<!-- Style -->
-	<link rel="stylesheet" type="text/css" href="./style.css" />
-
-	<! -- Favicon --> 
+	<!-- Favicon --> 
 	<link rel="icon" href="./favicon.ico" type="image/x-icon">
 	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-	<script type="text/javascript"> 
-		$(document).ready(function() { 
-				loadfile(); 
-				//start();
-		});
-	</script>
-
-
-
 
   </head>
   <body>
-	<div id="main" class="container-fluid">
-		<div class="row-fluid">
-			<!--<div class="span1"></div>-->
-			<div class="span12">
-				<div class="layout">
-					<div id="slideWrap">
-						<div id="currentSlide"></div>
-					</div>
-					<div id="footer">
-						<div id="footerCts">
-							<span id="page"></span>
-							<span id="time"></span>
-						</div>
-					</div>
-				</div>
-			</div>
+    <table id="table"></table>
+	<div id="footer">
+		<div id="footerCts">
+			<span id="page"></span>
+			<span id="time"></span>
 		</div>
-		<!--<div class="span1"></div>-->
+	</div>
 
-		<!-- Test div is used to resize text dynamically. DO NOT REMOVE -->
-		<div id="test"></div>
+	<!-- Test div is used to resize text dynamically. DO NOT REMOVE -->
+	<div id="test"></div>
 
-	</div> <!-- #main .container-fluid -->
-    <script src="js/bootstrap.min.js"></script>
+	<!-- jQuery and extensions -->
+    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+	<script src="lib/jquery.hotkeys.js" type="text/javascript"></script>
+	<script src="lib/jquery.getUrlParam.js" type="text/javascript"></script>
+	<script src="lib/jquery.ba-hashchange.js" type="text/javascript"></script>
+	<script src="lib/jquery.easing.js" type="text/javascript"></script>
+
+	<!-- Backbone -->
+	<script src="lib/underscore.js" type="text/javascript"></script>
+	<script src="lib/backbone.js" type="text/javascript"></script>
+
+	<!-- Markdown -->
+	<script src="lib/showdown.js" type="text/javascript"></script>
+
+	<!-- Slideshow Logic -->
+	<script src="./util.js" type="text/javascript"></script>
+	<script src="./slideshow.js" type="text/javascript"></script>
+	<script src="./slideshow.ui.js" type="text/javascript"></script>
+
+	<!-- Onload -->
+	<script type="text/javascript">
+		$(function() { 
+			loadfile(); 
+			//start();
+		});
+	</script>
+
   </body>
 </html>
-
