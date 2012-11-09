@@ -1,0 +1,42 @@
+
+body {
+	color: #ff0;
+	background-color: #080808;
+	font-family: helvetica;
+}
+
+ul, ol {
+	list-style: disc;
+	list-style-position: outside;
+	margin-left: 1em;
+	margin-right: 1em;
+	padding-top: 20px;
+}
+
+li {
+	margin-bottom: 0.5em;
+}
+
+li ul, li ol {
+	margin-top: 0.5em;
+	list-style: circle;
+}
+
+li ol {
+	list-style-type: upper-alpha;
+}
+
+li li {
+	font-size: smaller;
+}
+
+p {
+	padding: 0px;
+	margin: 0px;
+}
+
+p + p { padding: 1em 0px 0px 0px; }
+
+#footer {
+	color: #f0f0f0;
+}
