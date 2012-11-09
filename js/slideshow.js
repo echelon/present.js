@@ -13,7 +13,7 @@ function split_into_slides(text)
 };
 
 function loadfile() {
-	var file = $(document).getUrlParam('md') || 'exampleNew.md';
+	var file = $(document).getUrlParam('md') || 'example.md';
 	$.ajax({
 		url: file,
 		dataType: 'text',
