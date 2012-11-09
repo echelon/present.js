@@ -12,6 +12,20 @@ Documentation
 -------------
 (TODO)
 
+**Url parameters**
+
+* **md** &mdash; markdown file to load. Defaults to example.md.
+* **t** &mdash; specifies the time in minutes remaining. 
+	Defaults to 15.
+* **anim** &mdash; slide animation mode. 
+	* 'slide' (default)
+	* 'fade'
+	* 'none'
+
+**Replacements**
+
+* \-\- becomes &mdash;
+
 Libraries
 ---------
 (All batteries are included.)

@@ -6,9 +6,12 @@ body {
 	-webkit-user-select: none;
 }
 
+/* ================== MAIN TABLE ================== */
+
 /*
 	Ugh, tables. 
 	I'll make this responsive div's later. 
+	If I ever find the time. 
 */
 #table {
 	position: absolute;
@@ -55,6 +58,34 @@ img {
 	padding: 0px;
 	margin: 0px;
 }
+
+.one td {
+	vertical-align: middle;
+}
+
+.two td {
+	vertical-align: middle;
+	padding: 10px;
+}
+
+.two p {
+	text-align: center;
+}
+
+.three td > ul {
+	width: 70%;
+	margin: auto;
+}
+
+.three td {
+	vertical-align: middle;
+}
+
+.three td.c50-100 {
+	vertical-align: middle;
+}
+
+/* ================== OTHER ELEMENTS ================== */
 
 #footer {
 	position: absolute;

@@ -1,4 +1,4 @@
-This is my new slideshow system
+This is my new slideshow system.
 
 ---
 
@@ -14,16 +14,17 @@ This is my new slideshow system
 	* And sub bullet points
 	* More sub bullets
 
-* Another list
-* Starts here
-* And continues
+* Another column 
+* with a list
+* starts here
 
 ---
+
+Test
 
 * This is a bullet
 * This is another bullet
-
-Test
+* Yet another
 
 ---
 

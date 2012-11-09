@@ -1,8 +1,12 @@
 
 body {
-	color: #ff0;
-	background-color: #080808;
+	color: #ffdd22;
+	background-color: #181818;
 	font-family: helvetica;
+}
+
+#table {
+	font-family: 'Ubuntu Light';
 }
 
 ul, ol {

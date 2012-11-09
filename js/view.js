@@ -1,80 +1,17 @@
-
 /**
- * Clock
- * Helps me keep track of presentation runtime.
+ * Slide
+ * The slide currently being shown.
  */
-var ClockView = Backbone.View.extend({
-	el: '#time',
-
-	constructor: function() {
-		var that = this;
-		this.timer = setInterval(function() {that.render()}, 1000 * 10);
-		this.startClock = (new Date()).getTime();
-
-		// Timer URL parameter
-		// A timer for how long presentation must be... (minutes)
-		var time = parseInt($(document).getUrlParam('t')) || 15;
-		this.numMinutes = time;
-	},
-
-	render: function()
-	{
-		var that = this;
-		var getTime = function() {
-			var zf, d; 
-			var dsec, dmin, perc, clock, elap;
-
-			// Format time with leading zeros
-			zf = function(n) { return (n>9)? n : "0" + n; };
-
-			// Format minutes elapsed (nice rounding)
-			minf = function(n) {
-				var i, d;
-				i = parseInt(n);
-				d = n - i;
-				if (d > 0.74) {
-					i += 0.75;
-				}
-				else if (n - i > 0.49) {
-					i += 0.5;
-				}
-				else if (n - i > 0.24) {
-					i += 0.25;
-				}
-				return i;
-			};
-
-			d = new Date();
-			dsec = (d.getTime() - that.startClock) / 1000;
-			dmin = dsec / 60;
-
-			perc = parseInt(dmin / that.numMinutes * 100);
-			clock = d.getHours() + ':' + zf(d.getMinutes());
-			elap = minf(dmin) + ' / ' + that.numMinutes + 'm';
-
-			return elap + ' (' + perc + '%) | ' + clock;
-		}
-
-		$(this.el).html(getTime());
-	}
-});
-
 var SlideView = Backbone.View.extend({
-
-	//tagName: 'div',
-
 	// Animation used.
 	// Options are 'slide', and 'fade'.
 	// TODO: slide left/right depending on slide nav direction
-	animation: 'fade',
+	animation: $(document).getUrlParam('anim') || 'slide',
 
 	constructor: function(attrs)
 	{
-		this.collection = ('collection' in attrs)? attrs.collection: null;
-
-		// XXX: Bad spot for this? I have no idea.
-		// I don't remember the logical scope here
-		//$('#currentSlide').fitText();
+		this.collection = ('collection' in attrs)? 
+			attrs.collection: null;
 	},
 
 	transition: function() 
@@ -93,8 +30,9 @@ var SlideView = Backbone.View.extend({
 				$('#table').animate({
 					marginLeft: '0px'
 				}, 400, 'easeOutQuart', function() {
-					// prevent animations from queueing up and stalling
-					// typically occurs when 'rapidly' paging through slides
+					// Prevent animations from queueing up 
+					// and stalling. Typically occurs when 
+					// 'rapidly' paging through slides
 					$(this).stop(true); 
 				});
 				break;
@@ -120,37 +58,48 @@ var SlideView = Backbone.View.extend({
 			switch(blocks.length) {
 				case 1:
 					html = '<tr>' + 
-						   '<td class="c100-100">' + blocks[0] + '</td>' + 
+						   '<td class="c100-100">' + 
+						   		blocks[0] + '</td>' + 
 						   '</tr>';
 					break;
 				case 2:
 					html = '<tr>' + 
-						   '<td class="c50-100">' + blocks[0] + '</td>' + 
-						   '<td class="c50-100">' + blocks[1] + '</td>' + 
+						   '<td class="c50-100">' + 
+						   		blocks[0] + '</td>' + 
+						   '<td class="c50-100">' + 
+						   		blocks[1] + '</td>' + 
 						   '</tr>';
 					break;
 				case 3:
 					html = '<tr>' + 
-						   '<td class="c50-100" rowspan="2">' + 
+						   '<td class="c50-100" ' +
+						   		'rowspan="2">' + 
 						   		blocks[0] + '</td>' + 
-						   '<td class="c50-50">' + blocks[1] + '</td>' + 
+						   '<td class="c50-50">' + 
+						   		blocks[1] + '</td>' + 
 						   '</tr>' + 
 						   '<tr>' + 
-						   '<td class="c50-50">' + blocks[2] + '</td>' + 
+						   '<td class="c50-50">' + 
+						   		blocks[2] + '</td>' + 
 						   '</tr>';
 					break;
 				case 4:
 					html = '<tr>' + 
-						   '<td class="c50-50">' + blocks[0] + '</td>' + 
-						   '<td class="c50-50">' + blocks[1] + '</td>' + 
+						   '<td class="c50-50">' + 
+						   		blocks[0] + '</td>' + 
+						   '<td class="c50-50">' + 
+						   		blocks[1] + '</td>' + 
 						   '</tr>' + 
 						   '<tr>' + 
-						   '<td class="c50-50">' + blocks[2] + '</td>' + 
-						   '<td class="c50-50">' + blocks[3] + '</td>' + 
+						   '<td class="c50-50">' + 
+						   		blocks[2] + '</td>' + 
+						   '<td class="c50-50">' + 
+						   		blocks[3] + '</td>' + 
 						   '</tr>';
 					break;
 				default:
-					// Anything other than 1-4 blocks is an error!
+					// Anything other than 1-4 blocks 
+					// is an error!
 					break; 
 			}
 			return html;
@@ -168,7 +117,7 @@ var SlideView = Backbone.View.extend({
 			width = $td.width();
 			height = $td.height();
 
-			usedHeight = 15; // Heuristic, Start w/ '15px' just in case
+			usedHeight = 15; // Heuristic, Start w/ '15px' JIC
 			usedHeight += $('#footerCts').outerHeight(true);
 
 			$('#header').children().each(function(i) { 
@@ -213,7 +162,8 @@ var SlideView = Backbone.View.extend({
 				curWidth = testDiv.outerWidth();
 				curHeight = testDiv.outerHeight();
 
-				if(curWidth > availWidth || curHeight > availHeight) {
+				if(curWidth > availWidth || 
+						curHeight > availHeight) {
 					max = mid;	
 				}
 				else if(curHeight < availHeight) {
@@ -228,6 +178,11 @@ var SlideView = Backbone.View.extend({
 		// Build the table layout
 		$('#table').html(buildTable(slide.htmlBlocks));
 
+		var tClasses= {1:'one', 2:'two', 3:'three', 4:'four'};
+
+		$('#table').removeClass()
+			.addClass(tClasses[slide.htmlBlocks.length]);
+
 		// Resize text to maximum font. 
 		$('td').each(function() {
 			// pass
@@ -240,7 +195,8 @@ var SlideView = Backbone.View.extend({
 		//var percent = resizeText(slide);
 		//$('#table').css('font-size', percent + '%');
 
-		// XXX: TEMPORARY FIX. Remove duplicated youtube video bug
+		// XXX: TEMPORARY FIX. Remove duplicated youtube 
+		// video bug
 		var iframe = $('iframe');
 		if(iframe.length >= 2) {
 			iframe.last().remove();
@@ -279,6 +235,67 @@ var SlideView = Backbone.View.extend({
 
 			});
 		});
+	}
+});
+
+/**
+ * Clock
+ * Helps me keep track of presentation runtime.
+ */
+var ClockView = Backbone.View.extend({
+	el: '#time',
+
+	constructor: function() {
+		var that = this;
+		this.timer = setInterval(function() {that.render()}, 
+			1000 * 10);
+		this.startClock = (new Date()).getTime();
+
+		// Timer URL parameter
+		// A timer for how long presentation must be (minutes)
+		this.numMinutes = 
+			parseInt($(document).getUrlParam('t')) || 15;
+	},
+
+	render: function()
+	{
+		var that = this;
+		var getTime = function() {
+			var zf, d; 
+			var dsec, dmin, perc, clock, elap;
+
+			// Format time with leading zeros
+			zf = function(n) { return (n>9)? n : "0" + n; };
+
+			// Format minutes elapsed (nice rounding)
+			minf = function(n) {
+				var i, d;
+				i = parseInt(n);
+				d = n - i;
+				if (d > 0.74) {
+					i += 0.75;
+				}
+				else if (n - i > 0.49) {
+					i += 0.5;
+				}
+				else if (n - i > 0.24) {
+					i += 0.25;
+				}
+				return i;
+			};
+
+			d = new Date();
+			dsec = (d.getTime() - that.startClock) / 1000;
+			dmin = dsec / 60;
+
+			perc = parseInt(dmin / that.numMinutes * 100);
+			clock = d.getHours() + ':' + zf(d.getMinutes());
+			elap = minf(dmin) + ' / ' + that.numMinutes + 'm';
+
+			return elap + ' (' + perc + '%) | ' + clock;
+		}
+
+		$(this.el).html(getTime());
 	}
 });
 
