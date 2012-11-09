@@ -1,9 +1,4 @@
-p {
-	background-color: #f00;
-}
-
 td {
-	border: 1px solid #ff0;
 	vertical-align: top;
 }
 
@@ -87,9 +82,11 @@ body {
 }
 
 ul, ol {
+	list-style: disc;
 	list-style-position: outside;
 	margin-left: 1em;
 	margin-right: 1em;
+	padding-top: 20px;
 }
 
 li {
@@ -98,6 +95,7 @@ li {
 
 li ul, li ol {
 	margin-top: 0.5em;
+	list-style: circle;
 }
 
 li ol {

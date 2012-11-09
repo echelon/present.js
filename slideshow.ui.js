@@ -65,7 +65,8 @@ var SlideView = Backbone.View.extend({
 
 	// Animation used.
 	// Options are 'slide', and 'fade'.
-	animation: 'slide',
+	// TODO: slide left/right depending on slide nav direction
+	animation: 'fade',
 
 	constructor: function(attrs)
 	{
@@ -99,9 +100,9 @@ var SlideView = Backbone.View.extend({
 				break;
 
 			case 'fade':
-				$('#slideWrap').hide();
 				this.render();
-				$('#slideWrap').fadeIn(20);
+				$('#table').hide();
+				$('#table').fadeIn(100);
 				break;
 
 			default:
@@ -130,9 +131,9 @@ var SlideView = Backbone.View.extend({
 					break;
 				case 3:
 					html = '<tr>' + 
-						   '<td class="c50-50">' + blocks[0] + '</td>' + 
 						   '<td class="c50-100" rowspan="2">' + 
-						   		blocks[1] + '</td>' + 
+						   		blocks[0] + '</td>' + 
+						   '<td class="c50-50">' + blocks[1] + '</td>' + 
 						   '</tr>' + 
 						   '<tr>' + 
 						   '<td class="c50-50">' + blocks[2] + '</td>' + 
@@ -155,19 +156,17 @@ var SlideView = Backbone.View.extend({
 			return html;
 		}
 
-		$('#table').html(buildTable(slide.htmlBlocks));
-
-		var resizeText = function(slide)
+		var resizeText = function($td)
 		{
 			var testDiv, width, height, usedHeight,
 				availWidth, availHeight, curWidth, curHeight, dp;
 			
-			testDiv = $('#test').html(slide.htmlString);
+			testDiv = $('#test').html($td.html());
 			testDiv.css('font-size', '100%');
 			//testDiv.css('list-style-position', 'inside');
 
-			width = $(window).width();
-			height = $(window).height();
+			width = $td.width();
+			height = $td.height();
 
 			usedHeight = 15; // Heuristic, Start w/ '15px' just in case
 			usedHeight += $('#footerCts').outerHeight(true);
@@ -226,10 +225,20 @@ var SlideView = Backbone.View.extend({
 			return goodValue;
 		}
 
+		// Build the table layout
+		$('#table').html(buildTable(slide.htmlBlocks));
+
 		// Resize text to maximum font. 
-		var percent = resizeText(slide);
-		$('#currentSlide').css('font-size', percent/2 + '%');
-		$('#currentSlide').height(10000);
+		$('td').each(function() {
+			// pass
+			var perc = resizeText($(this));
+			console.log($(this).html());
+			console.log(perc);
+			$(this).css('font-size', perc + '%');
+		});
+
+		//var percent = resizeText(slide);
+		//$('#table').css('font-size', percent + '%');
 
 		// XXX: TEMPORARY FIX. Remove duplicated youtube video bug
 		var iframe = $('iframe');
@@ -348,9 +357,12 @@ var AppView = Backbone.View.extend({
 		slides.bind('slides:change', this.slideView.transition, 
 				this.slideView);
 
-		// XXX: What was this? Just a recenter?
-		/*// Page Layout
-		$(window).resize(function() { $('.presentation').center(); });*/
+		// Window resize. 
+		// FIXME: Flickers. Algo must be too slow.
+		var that = this;
+		$(window).resize(function() { 
+			that.slideView.render();
+		});
 
 		// Render first slide.
 		//this.render();
