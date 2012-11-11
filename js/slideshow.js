@@ -1,19 +1,24 @@
-// XXX: No UI in this file. Define slideshow.ui.js
-
-/* =============== NON-PUBLIC API FOLLOWS ============= */
-
 /**
  * Split a markdown document into slides.
- * Separates the document at each "Title".
+ * Slides are separated by '---'
+ * Slides without word characters are removed.
  */
 function split_into_slides(text)
 {
-	var s = text.split(/---/m);
-	return s;
+	var slides = text.split(/^---+\s+?$/m);
+	
+	for(i = 0; i < slides.length; true) {
+		if(slides[i].match(/\w+/)) {
+			i++;
+			continue;
+		}
+		slides.splice(i, 1);
+	}
+	return slides;
 };
 
 function loadfile() {
-	var file = $(document).getUrlParam('md') || 'example.md';
+	var file = $(document).getUrlParam('md') || 'slides.md';
 	$.ajax({
 		url: file,
 		dataType: 'text',
@@ -22,7 +27,7 @@ function loadfile() {
 };
 
 /**
- * TODO: Backbone Port
+ * Slide Model
  */
 var Slide = Backbone.Model.extend({
 
@@ -41,7 +46,7 @@ var Slide = Backbone.Model.extend({
 			tmp = markdown.replace(/--(?=[^-])/g, '&ndash;');
 
 			// Split into blocks
-			blocks = tmp.split(/\n{2}/);
+			blocks = tmp.split(/\n{2,}/);
 
 			for(i = 0; i < blocks.length; true) {
 				if(blocks[i]) {
@@ -70,22 +75,10 @@ var Slide = Backbone.Model.extend({
 		}
 
 		this.numImages = 0; // MUCH LATER TODO: Calculate
-
-		/*// Custom directives 
-		// #1 - Center 
-		h = h.replace(/center:\s+?([^\n]+)/g, "<center>$1</center>");
-		h = h.replace(/centerAll:\s+?([^\n\n|\n\r\n]+)/g, 
-											"<center>$1</center>");
-		////////////////////////*/
 	},
 
 	url: function() {
-		/*var title = function(t) {
-			return t.toLowerCase()
-					.replace(/\s+/g, '-')
-					.replace(/[^\w-]/g, '');	
-		}*/
-		return '#' + this.id; // + '-' + title(this.title);
+		return '#' + this.id;
 	}
 });
 
@@ -154,16 +147,6 @@ function handleLoad(data)
 		slides.add(slide);
 	}
 
-	/*
-	slides.bind('all', function() { alert('all'); }, this);
-	slides.bind('remove', function() { alert('removed'); }, this);
-	slides.bind('test', function() { alert('test'); }, this);
-	*/
-
-	//slides.remove(slides.at(1));
-	//slides.trigger('test');
-
 	window.app = new AppView(slides);
 };
-
 

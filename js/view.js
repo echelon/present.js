@@ -416,30 +416,3 @@ var AppView = Backbone.View.extend({
 	}
 });
 
-
-
-// TODO: Rename render()
-function show() {
-	$('.presentation').html(SS.slide().toHtml());
-
-	var h = $('.slide>h1').detach();
-	$('#header').html(h);
-
-	// TODO: Move this. 
-	// Report current slide
-	$('#page').html('' + (SS.curSlide()+1) + '/' + SS.totalSlides());
-	
-	$('.presentation').center();	
-};
-
-// From http://stackoverflow.com/questions/210717/what-is-the-best-
-// way-to-center-a-div-on-the-screen-using-jquery/210733#210733
-jQuery.fn.center = function () {
-	this.css("position","absolute");
-	this.css("top", ($(window).height() - this.height()) / 
-					2+$(window).scrollTop() + "px");
-	this.css("left", ($(window).width() - this.width()) / 
-					2+$(window).scrollLeft() + "px");
-	return this;
-};
-

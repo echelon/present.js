@@ -65,7 +65,8 @@ Prepare for random science images
 
 Ring closure reaction
 
-Some random contour graph--fantastic!
+Some random contour graph--just 
+fantastic!
 
 ---
 

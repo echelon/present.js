@@ -2,16 +2,18 @@
 body {
 	color: #ffdd22;
 	background-color: #181818;
-	font-family: helvetica;
-	font-family: 'Ubuntu Light';
+	font-family: 'Ubuntu', helvetica;
+	font-weight: 300;
 }
 
 #table {
-	font-family: 'Ubuntu Light';
+	font-family: 'Ubuntu', helvetica;
+	font-weight: 300;
 }
 
 #test {
-	font-family: 'Ubuntu Light';
+	font-family: 'Ubuntu', helvetica;
+	font-weight: 300;
 }
 
 ul, ol {
