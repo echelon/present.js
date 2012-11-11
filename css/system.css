@@ -24,6 +24,7 @@ body {
 }
 
 td {
+	padding: 15px;
 	/* Fixes weird valign for images */
 	vertical-align: top;
 }
@@ -85,6 +86,16 @@ img {
 	vertical-align: middle;
 }
 
+ul {
+	list-style: disc;
+	list-style-position: outside;
+}
+
+ol {
+	list-style: decimal;
+	list-style-position: outside;
+}
+
 /* ================== OTHER ELEMENTS ================== */
 
 #footer {
@@ -112,5 +123,4 @@ img {
 	height: auto;
 	position: fixed;
 }
-
 

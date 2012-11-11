@@ -38,7 +38,7 @@ var Slide = Backbone.Model.extend({
 			var tmp = '', blocks = [], i = 0;
 
 			// Custom directives
-			tmp = markdown.replace(/\s--\s/g, ' &ndash; ');
+			tmp = markdown.replace(/--(?=[^-])/g, '&ndash;');
 
 			// Split into blocks
 			blocks = tmp.split(/\n{2}/);

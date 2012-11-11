@@ -1,4 +1,11 @@
-This is my new slideshow system.
+This is present.js
+
+---
+
+* This is a slide
+* It has bullet points,
+	* Sub-bullet points,
+	* And so forth
 
 ---
 
@@ -7,16 +14,9 @@ This is my new slideshow system.
 	* And sub bullet points
 	* More sub bullets
 
----
-
-* This is a slide
-* It has bullet points
-	* And sub bullet points
-	* More sub bullets
-
-* Another column 
-* with a list
-* starts here
+1. What's this?
+2. An ordered list?
+3. You bet.
 
 ---
 
@@ -28,64 +28,58 @@ Test
 
 ---
 
-This is just text
+Prepare for random science images
 
 ---
 
-![](img/advimm/matrix.png)
+![](assets/electrostatic.jpg)
 
 ---
 
-![](img/advimm/matrix.png)
+![](assets/cyclization.png)
 
-![](img/advimm/matrix.png)
+![](assets/contour.jpg)
 
----
+Ring closure reaction
 
-![](img/advimm/matrix.png)
-
-* Aasdf asdf asdf asdf asdf
-* Aasdf asdf asdf asdf asdf
-* Aasdf asdf asdf asdf asdf
-* Aasdf asdf asdf asdf asdf
-* Aasdf asdf asdf asdf asdf
-* Aasdf asdf asdf asdf asdf
-* Aasdf asdf asdf asdf asdf
-
-![](img/advimm/matrix.png)
+Some random contour graph--fantastic!
 
 ---
 
-![](img/advimm/matrix.png)
+![](assets/contour.jpg)
 
-![](img/advimm/matrix.png)
+![](assets/electrostatic.jpg)
 
-![](img/advimm/matrix.png)
-
----
-
-![](img/advimm/matrix.png)
-
-![](img/advimm/matrix.png)
-
-![](img/advimm/matrix.png)
-
-![](img/advimm/matrix.png)
+* Lorem ipsum
+* Dolor sit amet
+* Electrostatic Density Plots, yay!
+* Consectetuer adipiscing elit
 
 ---
 
-![](img/advimm/matrix.png)
-
-![](img/advimm/matrix.png)
-
-![](http://www.w3.org/Style/Woolly/woolly-mc.png)
-
-![](img/advimm/matrix.png)
+![](assets/hyperconjugation.jpg)
 
 ---
 
-![](http://www.w3.org/Style/Woolly/woolly-mc.png)
+![](assets/hyperconjugation.jpg)
 
-![](img/advimm/matrix.png)
+![](assets/hyperconjugation.jpg)
 
-![](http://www.w3.org/Style/Woolly/woolly-mc.png)
+---
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+
+---
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+

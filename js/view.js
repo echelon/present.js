@@ -117,12 +117,13 @@ var SlideView = Backbone.View.extend({
 			width = $td.width();
 			height = $td.height();
 
-			usedHeight = 15; // Heuristic, Start w/ '15px' JIC
+			usedHeight = 0;
+			/*usedHeight = 15; // Heuristic, Start w/ '15px' JIC
 			usedHeight += $('#footerCts').outerHeight(true);
 
 			$('#header').children().each(function(i) { 
 				usedHeight += $(this).outerHeight(true);
-			});
+			});*/
 
 			availWidth = width;
 			availHeight = height - usedHeight;
@@ -132,12 +133,11 @@ var SlideView = Backbone.View.extend({
 
 			var percent = 100;
 			var goodPercent = percent;
-			var maxPercent = 800;
+			var maxPercent = 10000;
 			var minPercent = 50;
 
 			// Clean whitespace
-			var onlyUsePercent = 0.9;
-			availHeight = availHeight * 0.9; // TODO cleanup
+			//availHeight = availHeight * 0.9; // TODO cleanup
 
 			var max = maxPercent;
 			var min = minPercent;
@@ -185,10 +185,7 @@ var SlideView = Backbone.View.extend({
 
 		// Resize text to maximum font. 
 		$('td').each(function() {
-			// pass
 			var perc = resizeText($(this));
-			console.log($(this).html());
-			console.log(perc);
 			$(this).css('font-size', perc + '%');
 		});
 

@@ -22,9 +22,9 @@ Documentation
 	* 'fade'
 	* 'none'
 
-**Replacements**
+**Markdown Extensions / Replacements**
 
-* \-\- becomes &mdash;
+* \-\- becomes an emdash (&mdash;)
 
 Libraries
 ---------

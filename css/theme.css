@@ -10,11 +10,8 @@ body {
 }
 
 ul, ol {
-	list-style: disc;
-	list-style-position: outside;
 	margin-left: 1em;
 	margin-right: 1em;
-	padding-top: 20px;
 }
 
 li {
