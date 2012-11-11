@@ -6,6 +6,22 @@ body {
 	-webkit-user-select: none;
 }
 
+/* DEBUG */
+/*
+.red {
+	background-color: #900;
+}
+.blue {
+	background-color: #009;
+}
+.green {
+	background-color: #090;
+}
+.yellow {
+	background-color: #909;
+}
+*/
+
 /* ================== MAIN TABLE ================== */
 
 /*
@@ -86,6 +102,11 @@ img {
 	vertical-align: middle;
 }
 
+
+.four td {
+	vertical-align: middle;
+}
+
 ul {
 	list-style: disc;
 	list-style-position: outside;
@@ -122,5 +143,10 @@ ol {
 	width: auto;
 	height: auto;
 	position: fixed;
+	vertical-align: middle;
+	top: 10000;
+	left: 10000;
+	z-index: -1000;
+	padding: 15px; /* XXX: Must match td! */
 }
 

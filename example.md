@@ -9,10 +9,10 @@ This is present.js
 
 ---
 
-* This is a slide
-* It has bullet points
-	* And sub bullet points
-	* More sub bullets
+* This is the same list 
+* It has bullet points,
+	* Sub-bullet points,
+	* And so forth
 
 1. What's this?
 2. An ordered list?
@@ -22,9 +22,8 @@ This is present.js
 
 Test
 
-* This is a bullet
-* This is another bullet
-* Yet another
+* Something 
+* Something else
 
 ---
 
@@ -32,7 +31,31 @@ Prepare for random science images
 
 ---
 
-![](assets/electrostatic.jpg)
+![](assets/hyperconjugation.jpg)
+
+---
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+
+---
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+
+---
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
+
+![](assets/hyperconjugation.jpg)
 
 ---
 
@@ -52,34 +75,6 @@ Some random contour graph--fantastic!
 
 * Lorem ipsum
 * Dolor sit amet
-* Electrostatic Density Plots, yay!
 * Consectetuer adipiscing elit
-
----
-
-![](assets/hyperconjugation.jpg)
-
----
-
-![](assets/hyperconjugation.jpg)
-
-![](assets/hyperconjugation.jpg)
-
----
-
-![](assets/hyperconjugation.jpg)
-
-![](assets/hyperconjugation.jpg)
-
-![](assets/hyperconjugation.jpg)
-
----
-
-![](assets/hyperconjugation.jpg)
-
-![](assets/hyperconjugation.jpg)
-
-![](assets/hyperconjugation.jpg)
-
-![](assets/hyperconjugation.jpg)
-
+* Electrostatic Density Plots, yay!
+* THIS IS THE LAST SLIDE.

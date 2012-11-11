@@ -3,9 +3,14 @@ body {
 	color: #ffdd22;
 	background-color: #181818;
 	font-family: helvetica;
+	font-family: 'Ubuntu Light';
 }
 
 #table {
+	font-family: 'Ubuntu Light';
+}
+
+#test {
 	font-family: 'Ubuntu Light';
 }
 

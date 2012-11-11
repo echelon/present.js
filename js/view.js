@@ -58,42 +58,42 @@ var SlideView = Backbone.View.extend({
 			switch(blocks.length) {
 				case 1:
 					html = '<tr>' + 
-						   '<td class="c100-100">' + 
+						   '<td class="c100-100 red">' + 
 						   		blocks[0] + '</td>' + 
 						   '</tr>';
 					break;
 				case 2:
 					html = '<tr>' + 
-						   '<td class="c50-100">' + 
+						   '<td class="c50-100 red">' + 
 						   		blocks[0] + '</td>' + 
-						   '<td class="c50-100">' + 
+						   '<td class="c50-100 blue">' + 
 						   		blocks[1] + '</td>' + 
 						   '</tr>';
 					break;
 				case 3:
 					html = '<tr>' + 
-						   '<td class="c50-100" ' +
+						   '<td class="c50-100 red" ' +
 						   		'rowspan="2">' + 
 						   		blocks[0] + '</td>' + 
-						   '<td class="c50-50">' + 
+						   '<td class="c50-50 blue">' + 
 						   		blocks[1] + '</td>' + 
 						   '</tr>' + 
 						   '<tr>' + 
-						   '<td class="c50-50">' + 
+						   '<td class="c50-50 green">' + 
 						   		blocks[2] + '</td>' + 
 						   '</tr>';
 					break;
 				case 4:
 					html = '<tr>' + 
-						   '<td class="c50-50">' + 
+						   '<td class="c50-50 red">' + 
 						   		blocks[0] + '</td>' + 
-						   '<td class="c50-50">' + 
+						   '<td class="c50-50 blue">' + 
 						   		blocks[1] + '</td>' + 
 						   '</tr>' + 
 						   '<tr>' + 
-						   '<td class="c50-50">' + 
+						   '<td class="c50-50 green">' + 
 						   		blocks[2] + '</td>' + 
-						   '<td class="c50-50">' + 
+						   '<td class="c50-50 yellow">' + 
 						   		blocks[3] + '</td>' + 
 						   '</tr>';
 					break;
@@ -107,15 +107,17 @@ var SlideView = Backbone.View.extend({
 
 		var resizeText = function($td)
 		{
-			var testDiv, width, height, usedHeight,
+			var $test, testDiv, tdWidth, tdHeight, usedHeight,
 				availWidth, availHeight, curWidth, curHeight, dp;
 			
-			testDiv = $('#test').html($td.html());
-			testDiv.css('font-size', '100%');
-			//testDiv.css('list-style-position', 'inside');
+			$test = $('#test');
+			testDiv = $test.get()[0];
 
-			width = $td.width();
-			height = $td.height();
+			$test.html($td.html());
+			$test.css('font-size', '100%');
+
+			tdWidth = $td.width();
+			tdHeight = $td.height();
 
 			usedHeight = 0;
 			/*usedHeight = 15; // Heuristic, Start w/ '15px' JIC
@@ -125,27 +127,24 @@ var SlideView = Backbone.View.extend({
 				usedHeight += $(this).outerHeight(true);
 			});*/
 
-			availWidth = width;
-			availHeight = height - usedHeight;
-
-			curWidth = testDiv.outerWidth();
-			curHeight = testDiv.outerHeight();
+			curWidth = $test.width();
+			curHeight = $test.height();
 
 			var percent = 100;
 			var goodPercent = percent;
 			var maxPercent = 10000;
-			var minPercent = 50;
-
-			// Clean whitespace
-			//availHeight = availHeight * 0.9; // TODO cleanup
+			var minPercent = 0.001;
 
 			var max = maxPercent;
 			var min = minPercent;
 
-			var mid;
-			var lastMid;
-			var goodValue;
+			var mid = -2;
+			var lastMid = -1;
+			var goodValue = min;
 			var i = 0;
+				
+			$test.width(tdWidth);
+			$test.height(tdHeight);
 
 			// XXX: Binary search for optimal font-size percent value
 			while(min < max) 
@@ -153,26 +152,36 @@ var SlideView = Backbone.View.extend({
 				lastMid = mid;
 				mid = Math.floor((max + min)/2);
 
-				if(mid == lastMid || i++ > 20) {
+				if(mid == lastMid || i++ > 300) {
 					break;
 				}
 
-				testDiv.css('font-size', mid + '%');
+				$test.css('font-size', mid + 'pt'); 
+				$test.html($td.html());
 
-				curWidth = testDiv.outerWidth();
-				curHeight = testDiv.outerHeight();
+				curHeight = $test.height();
+				curWidth = $test.width();
 
-				if(curWidth > availWidth || 
-						curHeight > availHeight) {
-					max = mid;	
+				// Binary search: 
+				// Check for overflow / compare element hights
+				if(testDiv.scrollHeight > testDiv.offsetHeight ||
+					testDiv.scrollWidth > testDiv.offsetWidth) {
+						max = mid;
+						continue;
 				}
-				else if(curHeight < availHeight) {
-					min = mid;
-					goodValue = mid;
+
+				if(curHeight > tdHeight ||
+					curWidth > tdWidth) {
+							max = mid;	
+				}
+				else if(curHeight < tdHeight || 
+						curWidth < tdWidth) {
+							min = mid;
+							goodValue = mid;
 				}
 			}
-
-			return goodValue;
+			//return goodValue;
+			return mid;
 		}
 
 		// Build the table layout
@@ -186,7 +195,7 @@ var SlideView = Backbone.View.extend({
 		// Resize text to maximum font. 
 		$('td').each(function() {
 			var perc = resizeText($(this));
-			$(this).css('font-size', perc + '%');
+			$(this).css('font-size', perc + 'pt');
 		});
 
 		//var percent = resizeText(slide);
@@ -357,6 +366,12 @@ var AppView = Backbone.View.extend({
 					break;
 			}
 		});
+
+		// Tablet swipe action
+		$(document).on('swipeleft', function() { slides.next(); });
+		$(document).on('swiperight', function() { slides.prev(); });
+		$(document).on('swipedown', function() { slides.next(); });
+		$(document).on('swipeup', function() { slides.prev(); });
 
 		// Hash change
 		$(window).bind('hashchange', function() { 
