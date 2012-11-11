@@ -90,8 +90,9 @@ var SlideList = Backbone.Collection.extend({
 		this.markdownFull = '';
 		this.totalImages = 0;
 
-		// Current slide
-		this.cur = 0; 
+		// Public, but read-only!
+		this.cur = 0; // Current slide
+		this.lastSlide = 0; // Last slide
 	},
 
 	current: function() {
@@ -102,6 +103,7 @@ var SlideList = Backbone.Collection.extend({
 		if(this.cur >= this.length - 1) {
 			return;
 		}
+		this.lastSlide = this.cur;
 		this.cur += 1;
 		this.trigger('slides:change');
 	},
@@ -110,6 +112,7 @@ var SlideList = Backbone.Collection.extend({
 		if(this.cur <= 0) {
 			return;
 		}
+		this.lastSlide = this.cur;
 		this.cur -= 1;
 		this.trigger('slides:change');
 	},
@@ -121,6 +124,7 @@ var SlideList = Backbone.Collection.extend({
 		if(n < 0 || n >= this.length) {
 			return;
 		}
+		this.lastSlide = this.cur;
 		this.cur = n;
 		this.trigger('slides:change');
 	}

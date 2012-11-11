@@ -16,11 +16,20 @@ var SlideView = Backbone.View.extend({
 
 	transition: function() 
 	{
+		var moveRight = true;
+		if(this.collection.cur - this.collection.lastSlide < 0) {
+			moveRight = false;
+		}
+
 		switch(this.animation) {
 			case 'slide':
 				// Move out of view
+				var loc = 8000;
+				if(!moveRight) {
+					loc = -8000;
+				}
 				$('#table').css({
-					'margin-left': '8000px',
+					'margin-left': loc + 'px',
 					'overflow': 'hidden'
 				});
 
@@ -117,15 +126,7 @@ var SlideView = Backbone.View.extend({
 			$test.css('font-size', '100%');
 
 			tdWidth = $td.width();
-			tdHeight = $td.height();
-
-			usedHeight = 0;
-			/*usedHeight = 15; // Heuristic, Start w/ '15px' JIC
-			usedHeight += $('#footerCts').outerHeight(true);
-
-			$('#header').children().each(function(i) { 
-				usedHeight += $(this).outerHeight(true);
-			});*/
+			tdHeight = $td.height() - 10; // XXX: FOOTER HEIGHT
 
 			curWidth = $test.width();
 			curHeight = $test.height();
@@ -296,9 +297,10 @@ var ClockView = Backbone.View.extend({
 
 			perc = parseInt(dmin / that.numMinutes * 100);
 			clock = d.getHours() + ':' + zf(d.getMinutes());
-			elap = minf(dmin) + ' / ' + that.numMinutes + 'm';
+			elap = minf(dmin) + '/' + that.numMinutes + 'm';
 
-			return elap + ' (' + perc + '%) | ' + clock;
+			//return elap + ' (' + perc + '%) | ' + clock;
+			return elap + ' | ' + clock;
 		}
 
 		$(this.el).html(getTime());
@@ -400,19 +402,24 @@ var AppView = Backbone.View.extend({
 
 		this.clock = new ClockView;
 		this.clock.render();
+
+		$('#progress').progressbar({
+			value: this.slides.cur+1, // XXX: jquery-ui bug
+			max: this.slides.length
+		});
+
+		// Must call twice due to rendering bug
+		$('#progress').progressbar({value: this.slides.cur+1});
 	},
 
 	render: function() 
 	{
 		var progress = (this.slides.cur + 1) + '/' + this.slides.length;
-
-		//alert(this.slides.cur);
-
 		$('#page').html(progress);
 
-		location.hash = this.slides.current().url();
+		$('#progress').progressbar({value: this.slides.cur+1});
 
-		//this.slideView.render();
+		location.hash = this.slides.current().url();
 	}
 });
 
