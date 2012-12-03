@@ -45,6 +45,21 @@ var Slide = Backbone.Model.extend({
 			// Custom directives
 			tmp = markdown.replace(/--(?=[^-])/g, '&ndash;');
 
+			// LaTeX math emulation
+			tmp = tmp.replace(/\^{([^(\^{)]*)}/g, function(match, g1, g2) {
+				return '<sup>' + g1 + '</sup>';
+			});
+			tmp = tmp.replace(/\\?_{(.*)}/g, function(match, g1, g2) {
+				return '<sub>' + g1 + '</sub>';
+			});
+			
+			// Symbols
+			tmp = tmp.replace(/\(deg\)/ig, '&deg;')
+			tmp = tmp.replace(/''/g, '&Prime;')
+
+			// Currency
+			tmp = tmp.replace(/\(yuan\)/ig, '&#x5143;')
+
 			// Split into blocks
 			blocks = tmp.split(/\n{2,}/);
 

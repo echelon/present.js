@@ -1,20 +1,27 @@
 
-.ui-progressbar { height:2em; text-align: left; overflow: hidden; }
-.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
-.ui-widget-content { border: 1px solid #4a4a4a; background: #000000 50% top repeat-x; color: #ffffff; }
-.ui-widget-header { border: 1px solid #000000; background: #ccc 50% 50% repeat-x; color: #222222; font-weight: bold; }
-/* Corner radius */
-.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { -moz-border-radius-topleft: 6px; -webkit-border-top-left-radius: 6px; -khtml-border-top-left-radius: 6px; border-top-left-radius: 6px; }
-.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr { -moz-border-radius-topright: 6px; -webkit-border-top-right-radius: 6px; -khtml-border-top-right-radius: 6px; border-top-right-radius: 6px; }
-.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl { -moz-border-radius-bottomleft: 6px; -webkit-border-bottom-left-radius: 6px; -khtml-border-bottom-left-radius: 6px; border-bottom-left-radius: 6px; }
-.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 6px; -webkit-border-bottom-right-radius: 6px; -khtml-border-bottom-right-radius: 6px; border-bottom-right-radius: 6px; }
-
-
 body {
 	color: #ffdd22;
 	background-color: #181818;
 	font-family: 'Ubuntu', helvetica;
 	font-weight: 300;
+}
+
+em {
+	font-style: italic;
+	font-weight: normal;
+}
+
+b, strong {
+	color: #d93222;
+}
+
+small {
+	font-size: smaller;
+}
+
+h1 {
+	padding: 0px 0px 15px 0px;
+	text-decoration: underline;
 }
 
 #table {
@@ -56,6 +63,30 @@ p {
 
 p + p { padding: 1em 0px 0px 0px; }
 
+table table {
+	border: 1px solid #ccc;
+	width: 100%;
+}
+
+table table td {
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+
+table table th {
+	border: 1px solid #ccc;
+	background-color: #aa7;
+	color: #000;
+	padding: 5px;
+}
+
+a {
+	color: #f0a;
+}
+
+sup { vertical-align: super; }
+sub { vertical-align: sub; }
+
 #footer {
 	color: #fff;
 	font-size: 0.9em;
@@ -79,3 +110,16 @@ p + p { padding: 1em 0px 0px 0px; }
 #progress {
 	height: 15px;
 }
+
+/* jQuery UI Progress Bar */
+.ui-progressbar { height:2em; text-align: left; overflow: hidden; }
+.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
+.ui-widget-content { border: 1px solid #4a4a4a; background: #000000 50% top repeat-x; color: #ffffff; }
+.ui-widget-header { border: 1px solid #000000; background: #ccc 50% 50% repeat-x; color: #222222; font-weight: bold; }
+/* Corner radius */
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { -moz-border-radius-topleft: 6px; -webkit-border-top-left-radius: 6px; -khtml-border-top-left-radius: 6px; border-top-left-radius: 6px; }
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr { -moz-border-radius-topright: 6px; -webkit-border-top-right-radius: 6px; -khtml-border-top-right-radius: 6px; border-top-right-radius: 6px; }
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl { -moz-border-radius-bottomleft: 6px; -webkit-border-bottom-left-radius: 6px; -khtml-border-bottom-left-radius: 6px; border-bottom-left-radius: 6px; }
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 6px; -webkit-border-bottom-right-radius: 6px; -khtml-border-bottom-right-radius: 6px; border-bottom-right-radius: 6px; }
+
+
