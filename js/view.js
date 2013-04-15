@@ -56,6 +56,8 @@ var SlideView = Backbone.View.extend({
 				this.render();
 		}
 
+		// Syntax highlighting
+		Rainbow.color();
 	}, 
 
 	render: function()
@@ -111,6 +113,14 @@ var SlideView = Backbone.View.extend({
 					// is an error!
 					break; 
 			}
+
+			// Syntax highlighting (Called again JIC)
+			setTimeout(function() {
+				Rainbow.color();
+			}, 200);
+
+			Rainbow.color();
+
 			return html;
 		}
 
@@ -242,6 +252,7 @@ var SlideView = Backbone.View.extend({
 
 			});
 		});
+
 	}
 });
 
