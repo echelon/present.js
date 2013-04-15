@@ -253,6 +253,40 @@ var SlideView = Backbone.View.extend({
 			});
 		});
 
+		// Resize iframes 
+		// TODO: No code duplication
+		$('iframe').each(function() {
+
+			console.log('asdf');
+			var tdw = 0, tdh =0, 
+				nw = 0, nh = 0, 
+				rw = 0, rh = 0,
+				iw = $(this).width(),
+				ih = $(this).height();
+
+			$(this).width(1);
+			$(this).height(1);
+
+			tdw = $(this).parents('td').width();
+			tdh = $(this).parents('td').height();
+
+			console.log(iw, ih, tdw, tdh);
+
+			// Minify or magnify 
+			rw = tdw/iw;
+			rh = tdh/ih;
+			if(rw < rh) {
+				nw = Math.floor(iw * rw);
+				nh = Math.floor(ih * rw);
+			}
+			else {
+				nw = Math.floor(iw * rh);
+				nh = Math.floor(ih * rh);
+			}
+
+			$(this).width(nw);
+			$(this).height(nh);
+		});
 	}
 });
 
