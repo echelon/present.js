@@ -40,10 +40,21 @@ var Slide = Backbone.Model.extend({
 		}
 
 		parseSlide = function(markdown) {
-			var tmp = '', blocks = [], i = 0;
+			var tmp = markdown, blocks = [], i = 0, rgx = null;
+
+			// Youtube URL in image markup ![](youtube_url) to <iframe> embed
+			// youtube_url = https://www.youtube.com/watch?v=<ID_HERE>
+			rgx = /!\[.*\]\(https?:\/\/www.youtube.com\/watch\?v=(\w*)\)/g;
+			tmp = tmp.replace(rgx, function(match, g1, g2) {
+				return '<iframe width="640" height="360" src="' +
+					   'http://www.youtube.com/embed/' +
+						g1 +
+					   '?rel=0&showinfo=0' +
+					   '" frameborder="0" allowfullscreen></iframe>';
+			});
 
 			// Custom directives
-			tmp = markdown.replace(/--(?=[^-])/g, '&ndash;');
+			tmp = tmp.replace(/--(?=[^-])/g, '&ndash;');
 
 			// LaTeX math emulation
 			tmp = tmp.replace(/\^{([^(\^{)]*)}/g, function(match, g1, g2) {

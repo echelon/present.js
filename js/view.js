@@ -256,8 +256,6 @@ var SlideView = Backbone.View.extend({
 		// Resize iframes 
 		// TODO: No code duplication
 		$('iframe').each(function() {
-
-			console.log('asdf');
 			var tdw = 0, tdh =0, 
 				nw = 0, nh = 0, 
 				rw = 0, rh = 0,
@@ -269,8 +267,6 @@ var SlideView = Backbone.View.extend({
 
 			tdw = $(this).parents('td').width();
 			tdh = $(this).parents('td').height();
-
-			console.log(iw, ih, tdw, tdh);
 
 			// Minify or magnify 
 			rw = tdw/iw;
