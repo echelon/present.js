@@ -44,12 +44,14 @@ var Slide = Backbone.Model.extend({
 
 			// Youtube URL in image markup ![](youtube_url) to <iframe> embed
 			// youtube_url = https://www.youtube.com/watch?v=<ID_HERE>
-			rgx = /!\[.*\]\(https?:\/\/www.youtube.com\/watch\?v=(\w*)\)/g;
-			tmp = tmp.replace(rgx, function(match, g1, g2) {
+			rgx = /!\[.*\]\(https?:\/\/www.youtube.com\/watch\?v=(\w*)(&t=(\d+))?\)/g;
+			tmp = tmp.replace(rgx, function(match, g1, g2, g3, g4) {
+				var time = g3 ? '#t=' + g3 : '';
 				return '<iframe width="640" height="360" src="' +
 					   'http://www.youtube.com/embed/' +
 						g1 +
 					   '?rel=0&showinfo=0' +
+						time +
 					   '" frameborder="0" allowfullscreen></iframe>';
 			});
 
