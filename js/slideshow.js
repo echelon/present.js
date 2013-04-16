@@ -42,6 +42,10 @@ var Slide = Backbone.Model.extend({
 		parseSlide = function(markdown) {
 			var tmp = markdown, blocks = [], i = 0, rgx = null;
 
+			// Custom directives
+			// Custom directives
+			// Custom directives
+			
 			// Youtube URL in image markup ![](youtube_url) to <iframe> embed
 			// youtube_url = https://www.youtube.com/watch?v=<ID_HERE>
 			rgx = /!\[.*\]\(https?:\/\/www.youtube.com\/watch\?v=(\w*)(&t=(\d+))?\)/g;
@@ -55,8 +59,11 @@ var Slide = Backbone.Model.extend({
 					   '" frameborder="0" allowfullscreen></iframe>';
 			});
 
-			// Custom directives
-			tmp = tmp.replace(/--(?=[^-])/g, '&ndash;');
+			// Remove HTML comments.
+			tmp = tmp.replace(/<!--[\s\S]*-->/gm, '');
+			
+			// Add emdashes
+			tmp = tmp.replace(/--(?=[^-\>])/g, '&ndash;');
 
 			// LaTeX math emulation
 			tmp = tmp.replace(/\^{([^(\^{)]*)}/g, function(match, g1, g2) {
